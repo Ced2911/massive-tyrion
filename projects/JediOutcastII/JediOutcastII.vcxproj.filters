@@ -1,0 +1,799 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ui">
+      <UniqueIdentifier>{16d9d8ca-64ed-4bd6-9288-e273f762c5ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="ui\Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="jpeg">
+      <UniqueIdentifier>{c96f6bf1-aa89-44f9-967b-553e38ad757c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mp3">
+      <UniqueIdentifier>{ac70e5cf-0913-4a53-a0a6-18b92d3dbc81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{2787ffb0-ac96-43f7-b63d-6411b4dbdee3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ghoul2">
+      <UniqueIdentifier>{f792f034-e684-4caa-b12b-c777ec6994e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mp3\Header">
+      <UniqueIdentifier>{1bbf1041-3212-4c12-a83d-455a3c773794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ghoul2\Header">
+      <UniqueIdentifier>{dec8db04-d06f-4908-abdf-38a8855c4911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{71d8ae8f-5e67-4f73-9937-23191c1dd954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\client">
+      <UniqueIdentifier>{6ac4f398-4066-4747-8024-e375d2e2a338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="qcommon">
+      <UniqueIdentifier>{c6c5eda2-6645-4835-9ec1-a4cff752817a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="qcommon\Source">
+      <UniqueIdentifier>{d4cd06a1-e21d-4217-9368-ab49d7ed4f23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="qcommon\Header">
+      <UniqueIdentifier>{34fbde77-2c42-4bb8-b38d-a1d553592e5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{69c3267f-a187-48da-b4f4-642e5e6249be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="server">
+      <UniqueIdentifier>{6507579e-c19f-40cf-98b1-734d122a0b7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="server\Source">
+      <UniqueIdentifier>{7f9e651e-fdb9-4dec-9465-ed513a4eeba4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xdk">
+      <UniqueIdentifier>{19fe5ccc-0371-41d7-9426-536efeb35428}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xdk\Source">
+      <UniqueIdentifier>{b24cffef-3134-4c80-b4a1-6099b83d6cab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xdk\Header">
+      <UniqueIdentifier>{1b4a502b-8919-41f6-998d-b9ab31bfbe30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\Source">
+      <UniqueIdentifier>{d9117d29-827a-41db-a419-3d7cdbf435f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\Header">
+      <UniqueIdentifier>{f03ada76-45e1-4e32-8198-3e668716e447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="server\Header">
+      <UniqueIdentifier>{d4e9927e-d033-450f-8fa5-ad56fd9d3472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xenon_gl">
+      <UniqueIdentifier>{c50934f6-122b-488f-b3b9-e0ce410fe8fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xenon_gl\Source">
+      <UniqueIdentifier>{bf666c4a-a2e5-42b2-b7bc-b93d4d4b5b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xenon_gl\Header">
+      <UniqueIdentifier>{27f01853-4b77-46e6-8a65-6e05ec3cf10f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\code\ui\ui_atoms.cpp">
+      <Filter>ui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\ui\ui_connect.cpp">
+      <Filter>ui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\ui\ui_debug.cpp">
+      <Filter>ui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\ui\ui_main.cpp">
+      <Filter>ui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\ui\ui_shared.cpp">
+      <Filter>ui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\ui\ui_syscalls.cpp">
+      <Filter>ui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jcapimin.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jccoefct.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jccolor.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jcdctmgr.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jchuff.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jcinit.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jcmainct.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jcmarker.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jcmaster.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jcomapi.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jcparam.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jcphuff.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jcprepct.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jcsample.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jctrans.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdapimin.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdapistd.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdatadst.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdatasrc.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdcoefct.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdcolor.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jddctmgr.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdhuff.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdinput.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdmainct.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdmarker.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdmaster.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdpostct.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdsample.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jdtrans.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jerror.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jfdctflt.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jidctflt.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jmemmgr.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jmemnobs.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\jpeg-6\jutils.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\wavep.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\cdct.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\csbt.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\csbtb.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\csbtl3.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\cup.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\cupini.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\cupl1.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\cupl3.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\cwin.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\cwinb.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\cwinm.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\hwin.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\l3dq.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\l3init.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\mdct.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\mhead.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\msis.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\towave.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\uph.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\mp3code\upsf.c">
+      <Filter>mp3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\ghoul2\g2_api.cpp">
+      <Filter>ghoul2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\ghoul2\g2_bolts.cpp">
+      <Filter>ghoul2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\ghoul2\g2_bones.cpp">
+      <Filter>ghoul2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\ghoul2\g2_misc.cpp">
+      <Filter>ghoul2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\ghoul2\g2_surfaces.cpp">
+      <Filter>ghoul2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\cl_cgame.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\cl_ui.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\cl_cin.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\cl_console.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\cl_input.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\cl_keys.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\cl_main.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\cl_mp3.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\cl_parse.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\cl_scrn.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\unzip.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\cm_load.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\cm_patch.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\cm_polylib.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\cm_test.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\cm_trace.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\cmd.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\common.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\cvar.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\files.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\hstring.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\md4.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\msg.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\net_chan.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\strip.cpp">
+      <Filter>qcommon\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\snd_ambient.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\snd_dma.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\snd_mem.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\snd_mix.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\snd_music.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\client\vmachine.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\game\q_math.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\game\q_shared.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\server\sv_world.cpp">
+      <Filter>server\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\server\exe_headers.cpp">
+      <Filter>server\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\server\sv_ccmds.cpp">
+      <Filter>server\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\server\sv_client.cpp">
+      <Filter>server\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\server\sv_game.cpp">
+      <Filter>server\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\server\sv_init.cpp">
+      <Filter>server\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\server\sv_main.cpp">
+      <Filter>server\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\server\sv_savegame.cpp">
+      <Filter>server\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\server\sv_snapshot.cpp">
+      <Filter>server\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\xdk\xdk_gamma.cpp">
+      <Filter>xdk\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\xdk\xdk_wndproc.cpp">
+      <Filter>xdk\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\xdk\xdk_glimp.cpp">
+      <Filter>xdk\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\xdk\xdk_input.cpp">
+      <Filter>xdk\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\xdk\xdk_main.cpp">
+      <Filter>xdk\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\xdk\xdk_qgl.cpp">
+      <Filter>xdk\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\xdk\xdk_shared.cpp">
+      <Filter>xdk\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\xdk\xdk_snd.cpp">
+      <Filter>xdk\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\xdk\xdk_syscon.cpp">
+      <Filter>xdk\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\xdk\xdk_video.cpp">
+      <Filter>xdk\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\matcomp.c">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_animation.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_backend.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_font.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_bsp.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_cmds.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_curve.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_draw.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_flares.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_ghoul2.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_jpeg_interface.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_image.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_init.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_noise.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_main.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_marks.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_mesh.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_model.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_light.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_quicksprite.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_worldeffects.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_scene.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_shade.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_shade_calc.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_shader.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_shadows.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_sky.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_stl.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_surface.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_surfacesprites.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\renderer\tr_world.cpp">
+      <Filter>renderer\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xenon\GL\gl_colors.cpp">
+      <Filter>xenon_gl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xenon\GL\gldx9texture.cpp">
+      <Filter>xenon_gl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xenon\GL\gl_draw.cpp">
+      <Filter>xenon_gl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xenon\GL\gl_main.cpp">
+      <Filter>xenon_gl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xenon\GL\gl_matrices.cpp">
+      <Filter>xenon_gl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xenon\GL\gl_shader_manager.cpp">
+      <Filter>xenon_gl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xenon\GL\gl_states.cpp">
+      <Filter>xenon_gl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xenon\GL\gl_states_.cpp">
+      <Filter>xenon_gl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xenon\GL\gl_texenv.cpp">
+      <Filter>xenon_gl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xenon\GL\gl_textures.cpp">
+      <Filter>xenon_gl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xenon\GL\gl_vertices.cpp">
+      <Filter>xenon_gl\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\code\ui\ui.def">
+      <Filter>ui\Header Files</Filter>
+    </None>
+    <None Include="..\..\code\renderer\ref_trin.def">
+      <Filter>renderer</Filter>
+    </None>
+    <None Include="..\..\code\renderer\mssccprj.scc">
+      <Filter>renderer</Filter>
+    </None>
+    <None Include="..\..\code\renderer\vssver.scc">
+      <Filter>renderer</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\code\ui\gameinfo.h">
+      <Filter>ui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\ui\menudef.h">
+      <Filter>ui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\ui\ui_local.h">
+      <Filter>ui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\ui\ui_playerinfo.h">
+      <Filter>ui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\ui\ui_public.h">
+      <Filter>ui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\ui\ui_shared.h">
+      <Filter>ui\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\jpeg-6\jversion.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\jpeg-6\jchuff.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\jpeg-6\jconfig.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\jpeg-6\jdct.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\jpeg-6\jdhuff.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\jpeg-6\jerror.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\jpeg-6\jinclude.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\jpeg-6\jmemsys.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\jpeg-6\jmorecfg.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\jpeg-6\jpegint.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\jpeg-6\jpeglib.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\mp3code\config.h">
+      <Filter>mp3\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\mp3code\copyright.h">
+      <Filter>mp3\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\mp3code\htable.h">
+      <Filter>mp3\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\mp3code\l3.h">
+      <Filter>mp3\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\mp3code\mhead.h">
+      <Filter>mp3\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\mp3code\mp3struct.h">
+      <Filter>mp3\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\mp3code\port.h">
+      <Filter>mp3\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\mp3code\small_header.h">
+      <Filter>mp3\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\mp3code\tableawd.h">
+      <Filter>mp3\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\mp3code\jdw.h">
+      <Filter>mp3\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\ghoul2\g2.h">
+      <Filter>ghoul2\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\cm_local.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\cm_patch.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\cm_polylib.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\cm_public.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\hstring.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\miniheap.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\qcommon.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\qfiles.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\sstring.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\strip.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\strippublic.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\stv_version.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\tags.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\unzip.h">
+      <Filter>qcommon\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\xdk\xdk_local.h">
+      <Filter>xdk\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\xdk\bink.h">
+      <Filter>xdk\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\xdk\resource.h">
+      <Filter>xdk\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\xdk\glw_xdk.h">
+      <Filter>xdk\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\xdk\rad.h">
+      <Filter>xdk\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\amd3d.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\glext.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\matcomp.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\mdx_format.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\qgl_linked.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\qgl.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\tr_font.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\tr_jpeg_interface.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\tr_local.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\tr_public.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\tr_quicksprite.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\tr_stl.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\tr_types.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\renderer\tr_worldeffects.h">
+      <Filter>renderer\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\server\exe_headers.h">
+      <Filter>server\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\server\server.h">
+      <Filter>server\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xenon\GL\gl.h">
+      <Filter>xenon_gl\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xenon\GL\gl_main.h">
+      <Filter>xenon_gl\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xenon\GL\gl_png_utils.h">
+      <Filter>xenon_gl\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xenon\GL\gl_shader_manager.h">
+      <Filter>xenon_gl\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xenon\GL\gl_xenos.h">
+      <Filter>xenon_gl\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xenon\GL\glu.h">
+      <Filter>xenon_gl\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xenon\GL\glut.h">
+      <Filter>xenon_gl\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
