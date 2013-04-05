@@ -153,6 +153,7 @@ If the line width has changed, reformat the buffer.
 */
 void Con_CheckResize (void)
 {
+#ifndef _XBOX
 	int		i, j, width, oldwidth, oldtotallines, numlines, numchars;
 	MAC_STATIC short	tbuf[CON_TEXTSIZE];
 
@@ -212,7 +213,9 @@ void Con_CheckResize (void)
 
 		Con_ClearNotify ();
 	}
+#else
 
+#endif
 	con.current = con.totallines - 1;
 	con.display = con.current;
 }

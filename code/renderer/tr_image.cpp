@@ -979,7 +979,7 @@ image_t *R_CreateImage( const char *name, const byte *pic, int width, int height
 
 	if (name[0] == '*')
 	{
-		char *psLightMapNameSearchPos = strrchr(name,'/');
+		const char *psLightMapNameSearchPos = strrchr(name,'/');
 		if (  psLightMapNameSearchPos && !strncmp( psLightMapNameSearchPos+1, "lightmap", 8 ) ) {
 			isLightmap = qtrue;
 		}
@@ -1634,7 +1634,7 @@ static void R_CreateDlightImage( void )
 			xs = (DLIGHT_SIZE * 0.5f - x);
 			ys = (DLIGHT_SIZE * 0.5f - y);
 
-            b = 255 - sqrt( xs * xs + ys * ys ) * 9.0f; // try and generate numbers in the range of 255-0
+            b = 255 - sqrtl( xs * xs + ys * ys ) * 9.0f; // try and generate numbers in the range of 255-0
 
 			// should be close, but clamp anyway
 			if ( b > 255 ) 

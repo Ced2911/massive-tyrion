@@ -1,4 +1,8 @@
+#ifdef _XBOX
+#include <xtl.h>
+#else
 #include <windows.h>
+#endif
 #include "cm_local.h"
 #include "hstring.h"
 

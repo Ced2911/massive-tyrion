@@ -143,10 +143,9 @@ public:
 	   return &value;
 	}
 		
-	// return maximum number of elements that can be allocated
 	size_type max_size () const
 	{
-	   return mMaxSize;
+	   return MAP_NODE_SIZE;
 	}
 	
 	// allocate but don't initialize num elements of type T

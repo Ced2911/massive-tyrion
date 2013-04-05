@@ -17,7 +17,7 @@
 #pragma warning (disable: 4032)
 #pragma warning (disable: 4201)
 #pragma warning (disable: 4214)
-#include <windows.h>
+#include <xtl.h>
 #include <gl/gl.h>
 
 #elif defined( __APPLE__ ) && defined( __MACH__ )
@@ -138,7 +138,7 @@ extern void ( APIENTRY * qglPNTrianglesiATI )( GLenum pname, GLint param );
 //===========================================================================
 
 // non-windows systems will just redefine qgl* to gl*
-#if !defined( _WIN32 ) && !defined( __linux__ )
+#if (!defined( _WIN32 ) && !defined( __linux__ )) || defined( _XBOX )
 
 #include "qgl_linked.h"
 
@@ -483,7 +483,9 @@ extern  void ( APIENTRY * qglVertex4sv )(const GLshort *v);
 extern  void ( APIENTRY * qglVertexPointer )(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
 extern  void ( APIENTRY * qglViewport )(GLint x, GLint y, GLsizei width, GLsizei height);
 
-#if defined( _WIN32 )
+#if defined( _XBOX) 
+
+#elif defined( _WIN32 )
 
 extern BOOL  ( WINAPI * qwglCopyContext)(HGLRC, HGLRC, UINT);
 extern HGLRC ( WINAPI * qwglCreateContext)(HDC);

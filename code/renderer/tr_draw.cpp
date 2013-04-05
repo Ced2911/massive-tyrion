@@ -778,6 +778,7 @@ qboolean RE_InitDissolve(qboolean bForceCircularExtroWipe)
 {
 //	ri.Printf( PRINT_ALL, "RE_InitDissolve()\n");
 	qboolean bReturn = qfalse;
+	int i,y;
 
 	if (//Dissolve.iStartTime == 0	// no point in interruping an existing one
 		//&&
@@ -815,7 +816,7 @@ qboolean RE_InitDissolve(qboolean bForceCircularExtroWipe)
 			//
 			// do it...
 			//
-			for (int y = 0; y < glConfig.vidHeight; y++)
+			for (y = 0; y < glConfig.vidHeight; y++)
 			{
 				pbDst -= iClearBytes;
 				memset(pbDst,0,iClearBytes);
@@ -845,7 +846,7 @@ qboolean RE_InitDissolve(qboolean bForceCircularExtroWipe)
 			// Now, in case of busted drivers, 3DFX cards, etc etc we stomp the alphas to 255...
 			//
 			byte *pPix = pBuffer;
-			for (int i=0; i<iBufferBytes/4; i++, pPix += 4)
+			for (i=0; i<iBufferBytes/4; i++, pPix += 4)
 			{
 				pPix[3] = 255;
 			}

@@ -2454,7 +2454,7 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 //	mdxmTag_t			*tag;
 	mdxmTriangle_t		*tri;
 	mdxmVertex_t		*v;
- 	mdxmFrame_t			*cframe;
+// 	mdxmFrame_t			*cframe;
 	int					*boneRef;
 #endif
 
@@ -2623,6 +2623,7 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 			v = (mdxmVertex_t *) ( (byte *)surf + surf->ofsVerts );
 			for ( j = 0 ; j < surf->numVerts ; j++ ) 
 			{
+#if 0
 				v->normal[0] = LittleFloat( v->normal[0] );
 				v->normal[1] = LittleFloat( v->normal[1] );
 				v->normal[2] = LittleFloat( v->normal[2] );
@@ -2641,6 +2642,18 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 					v->weights[k].boneWeight = LittleFloat( v->weights[k].boneWeight );
 				}
 				v = (mdxmVertex_t *)&v->weights[/*v->numWeights*/surf->maxVertBoneWeights];
+#else
+				// Try
+				v->normal[0] = LittleFloat( v->normal[0] );
+				v->normal[1] = LittleFloat( v->normal[1] );
+				v->normal[2] = LittleFloat( v->normal[2] );
+
+				v->vertCoords[0] = LittleFloat( v->vertCoords[0] );
+				v->vertCoords[1] = LittleFloat( v->vertCoords[1] );
+				v->vertCoords[2] = LittleFloat( v->vertCoords[2] );
+
+				v->uiNmWeightsAndBoneIndexes = LittleLong( v->uiNmWeightsAndBoneIndexes );
+#endif
 			}
 #endif
 
@@ -2685,7 +2698,7 @@ qboolean R_LoadMDXA( model_t *mod, void *buffer, const char *mod_name, qboolean 
 #ifndef _M_IX86
 	int					j, k, i;
 	int					frameSize;
-	mdxaFrame_t			*cframe;
+//	mdxaFrame_t			*cframe;
 	mdxaSkel_t			*boneInfo;
 #endif
 
@@ -2760,6 +2773,7 @@ qboolean R_LoadMDXA( model_t *mod, void *buffer, const char *mod_name, qboolean 
 		boneInfo += (int)( &((mdxaSkel_t *)0)->children[ boneInfo->numChildren ] );
 	}
 
+#if 0
 
 	// swap all the frames
 	frameSize = (int)( &((mdxaFrame_t *)0)->bones[ mdxa->numBones ] );
@@ -2778,6 +2792,7 @@ qboolean R_LoadMDXA( model_t *mod, void *buffer, const char *mod_name, qboolean 
 			((short *)cframe->bones)[j] = LittleShort( ((short *)cframe->bones)[j] );
 		}
 	}
+#endif
 #endif
 	return qtrue;
 }

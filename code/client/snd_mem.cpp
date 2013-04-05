@@ -8,6 +8,7 @@
 #include "snd_local.h"
 #include "cl_mp3.h"
 
+#ifndef _XBOX
 // Open AL
 void S_PreProcessLipSync(sfx_t *sfx);
 extern int s_UseOpenAL;
@@ -1015,3 +1016,4 @@ void S_PreProcessLipSync(sfx_t *sfx)
 	sfx->lipSyncData[j] = sample;
 }
 
+#endif

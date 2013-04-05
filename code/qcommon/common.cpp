@@ -5,8 +5,10 @@
 #include "../qcommon/sstring.h"	// to get Gil's string class, because MS's doesn't compile properly in here
 #include "stv_version.h"
 
-#ifdef _WIN32
-#include <windows.h>	// for Sleep for Z_Malloc recovery attempy
+#ifdef _XBOX
+#include <xtl.h>	// for Sleep for Z_Malloc recovery attempy
+#elif defined(_WIN32)
+#include <windows.h>
 #endif
 
 
@@ -1569,7 +1571,7 @@ Com_PushEvent
 */
 void Com_PushEvent( sysEvent_t *event ) {
 	sysEvent_t		*ev;
-	static			printedWarning;
+	static int printedWarning;
 
 	ev = &com_pushedEvents[ com_pushedEventsHead & (MAX_PUSHED_EVENTS-1) ];
 

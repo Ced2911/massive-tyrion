@@ -535,7 +535,7 @@ qboolean G2_SegmentTriangleTest( const vec3_t start, const vec3_t end,
 // now we're at poly level, check each model space transformed poly against the model world transfomed ray
 static bool G2_TracePolys(const mdxmSurface_t *surface, const mdxmSurfHierarchy_t *surfInfo, CTraceSurface &TS)
 {
-	int				j, numTris;
+	int				i, j, numTris;
 	
 	// whip through and actually transform each vertex
 	const mdxmTriangle_t *tris = (mdxmTriangle_t *) ((byte *)surface + surface->ofsTriangles);
@@ -552,7 +552,7 @@ static bool G2_TracePolys(const mdxmSurface_t *surface, const mdxmSurfHierarchy_
 		// did we hit it?
 		if (G2_SegmentTriangleTest(TS.rayStart, TS.rayEnd, point1, point2, point3, qtrue, qtrue, hitPoint, normal, &face))
 		{	// find space in the collision records for this record
-			for (int i=0; i<MAX_G2_COLLISIONS;i++)
+			for (i=0; i<MAX_G2_COLLISIONS;i++)
 			{
 				if (TS.collRecMap[i].mEntityNum == -1)
 				{
@@ -682,7 +682,7 @@ static bool G2_RadiusTracePolys(
 								CTraceSurface &TS
 								)
 {
-	int		j;
+	int	i,j;
 	vec3_t basis1;
 	vec3_t basis2;
 	vec3_t taxis;
@@ -713,8 +713,8 @@ static bool G2_RadiusTracePolys(
 	VectorNormalize(basis1);
 	VectorNormalize(basis2);
 
-	const float c=cos(0);//theta
-	const float s=sin(0);//theta
+	const float c=cosf(0);//theta
+	const float s=sinf(0);//theta
 
 	VectorScale(basis1, 0.5f * c / TS.m_fRadius,taxis);
 	VectorMA(taxis,     0.5f * s / TS.m_fRadius,basis2,taxis);
@@ -798,7 +798,7 @@ static bool G2_RadiusTracePolys(
 		{
 			// we hit a triangle, so init a collision record...
 			//
-			for (int i=0; i<MAX_G2_COLLISIONS;i++)
+			for (i=0; i<MAX_G2_COLLISIONS;i++)
 			{
 				if (TS.collRecMap[i].mEntityNum == -1)
 				{
@@ -1109,7 +1109,7 @@ void *G2_FindSurface(const model_s *mod, int index, int lod)
 
 qboolean G2_SaveGhoul2Models(CGhoul2Info_v &ghoul2, char **buffer, int *size)
 {
-
+	int i, x;
 	// is there anything to save?
 	if (!ghoul2.IsValid()||!ghoul2.size())
 	{
@@ -1129,7 +1129,7 @@ qboolean G2_SaveGhoul2Models(CGhoul2Info_v &ghoul2, char **buffer, int *size)
 	// add in count for number of ghoul2 models
 	*size += 4;	
 	// start out working out the total size of the buffer we need to allocate
-	for (int i=0; i<ghoul2.size();i++)
+	for (i=0; i<ghoul2.size();i++)
 	{
 		*size += ghoul2BlockSize;
 		// add in count for number of surfaces
@@ -1165,7 +1165,7 @@ qboolean G2_SaveGhoul2Models(CGhoul2Info_v &ghoul2, char **buffer, int *size)
 		tempBuffer +=4;
 
 		// now save the all the surface list info
-		for (int x=0; x<ghoul2[i].mSlist.size(); x++)
+		for (x=0; x<ghoul2[i].mSlist.size(); x++)
 		{
 			memcpy(tempBuffer, &ghoul2[i].mSlist[x], SURFACE_SAVE_BLOCK_SIZE);
 			tempBuffer += SURFACE_SAVE_BLOCK_SIZE;
@@ -1206,8 +1206,9 @@ void G2_FreeSaveBuffer(char *buffer)
 int G2_FindConfigStringSpace(char *name, int start, int max)
 {
 	char	s[MAX_STRING_CHARS];
+	int  i;
 
-	for (int  i=1 ; i<max ; i++ ) 
+	for (i=1 ; i<max ; i++ ) 
 	{
 		SV_GetConfigstring( start + i, s, sizeof( s ) );
 		if ( !s[0] ) 
@@ -1226,6 +1227,7 @@ int G2_FindConfigStringSpace(char *name, int start, int max)
 
 void G2_LoadGhoul2Model(CGhoul2Info_v &ghoul2, char *buffer)
 {
+	int i,x;
 	// first thing, lets see how many ghoul2 models we have, and resize our buffers accordingly
 	int newSize = *(int*)buffer;
 	ghoul2.resize(newSize);
@@ -1242,7 +1244,7 @@ void G2_LoadGhoul2Model(CGhoul2Info_v &ghoul2, char *buffer)
 	int ghoul2BlockSize = (int)&ghoul2[0].mTransformedVertsArray - (int)&ghoul2[0].mModelindex;
 
 	// now we have enough instances, lets go through each one and load up the relevant details
-	for (int i=0; i<ghoul2.size(); i++)
+	for (i=0; i<ghoul2.size(); i++)
 	{
 		ghoul2[i].mSkelFrameNum = 0;
 		ghoul2[i].mModelindex=-1;
@@ -1263,7 +1265,7 @@ void G2_LoadGhoul2Model(CGhoul2Info_v &ghoul2, char *buffer)
 		buffer +=4;
 
 		// now load all the surfaces
-		for (int x=0; x<ghoul2[i].mSlist.size(); x++)
+		for (x=0; x<ghoul2[i].mSlist.size(); x++)
 		{
 			memcpy(&ghoul2[i].mSlist[x], buffer, SURFACE_SAVE_BLOCK_SIZE);
 			buffer += SURFACE_SAVE_BLOCK_SIZE;

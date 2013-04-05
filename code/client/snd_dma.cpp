@@ -13,6 +13,8 @@
 #include "cl_mp3.h"
 #include "snd_music.h"
 
+#ifndef _XBOX
+
 static void S_Play_f(void);
 static void S_SoundList_f(void);
 static void S_Music_f(void);
@@ -5655,4 +5657,693 @@ void Clamp(EAXVECTOR *eaxVector)
 	eaxVector->y *= flInvMagnitude;
 	eaxVector->z *= flInvMagnitude;
 }
+#else
 
+
+void S_SoundInfo_f(void) {	
+	Com_Printf("----- Sound Info -----\n" );
+
+	S_DisplayFreeMemory();
+	Com_Printf("----------------------\n" );
+}
+
+
+
+/*
+================
+S_Init
+================
+*/
+void S_Init( void ) {
+
+	Com_Printf("\n------- sound initialization -------\n");
+
+	Com_Printf("\n--- ambient sound initialization ---\n");
+
+	AS_Init();
+}
+
+// only called from snd_restart. QA request...
+//
+void S_ReloadAllUsedSounds(void)
+{
+	
+}
+
+// =======================================================================
+// Shutdown sound engine
+// =======================================================================
+
+void S_Shutdown( void )
+{
+	Cmd_RemoveCommand("play");
+	Cmd_RemoveCommand("music");
+	Cmd_RemoveCommand("stopsound");
+	Cmd_RemoveCommand("soundlist");
+	Cmd_RemoveCommand("soundinfo");
+	Cmd_RemoveCommand("mp3_calcvols");
+	Cmd_RemoveCommand("s_dynamic");
+	AS_Free();
+}
+
+
+
+/*
+	Mutes / Unmutes all OpenAL sound
+*/
+void S_AL_MuteAllSounds(qboolean bMute)
+{
+     
+}
+
+
+/*
+==================
+S_FindName
+
+Will allocate a new sfx if it isn't found
+==================
+*/
+sfx_t *S_FindName( const char *name ) {
+	return NULL;
+}
+
+/*
+=================
+S_DefaultSound
+=================
+*/
+void S_DefaultSound( sfx_t *sfx ) {
+	
+	int		i;
+
+	sfx->iSoundLengthInSamples	= 512;								// #samples, ie shorts
+	sfx->pSoundData				= (short *)	SND_malloc(512*2, sfx);	// ... so *2 for alloc bytes	
+	sfx->bInMemory				= qtrue;
+	
+	for ( i=0 ; i < sfx->iSoundLengthInSamples ; i++ ) 
+	{
+		sfx->pSoundData[i] = i;
+	}
+}
+
+
+/*
+===================
+S_DisableSounds
+
+Disables sounds until the next S_BeginRegistration.
+This is called when the hunk is cleared and the sounds
+are no longer valid.
+===================
+*/
+void S_DisableSounds( void ) {
+	S_StopAllSounds();
+}
+
+/*
+=====================
+S_BeginRegistration
+
+=====================
+*/
+void S_BeginRegistration( void )
+{
+	
+}
+
+
+void EALFileInit(char *level)
+{
+	
+}
+
+
+
+/*
+==================
+S_RegisterSound
+
+Creates a default buzz sound if the file can't be loaded
+==================
+*/
+sfxHandle_t	S_RegisterSound( const char *name) 
+{
+		return 0;
+}
+
+void S_memoryLoad(sfx_t	*sfx) 
+{
+	
+}
+
+
+
+//=============================================================================
+static qboolean S_CheckChannelStomp( int chan1, int chan2 )
+{
+	
+	return qfalse;
+}
+
+
+/*
+=================
+S_PickChannel
+=================
+*/
+// there were 2 versions of this, one for A3D and one normal, but the normal one wouldn't compile because
+//	it hadn't been updated for some time, so rather than risk anything weird/out of date, I just removed the 
+//	A3D lines from this version and deleted the other one. 
+//
+// If this really bothers you then feel free to play with it. -Ste.
+//
+channel_t *S_PickChannel(int entnum, int entchannel)
+{
+   
+	return NULL;
+}
+
+
+
+/*
+	For use with Open AL
+
+	Allows more than one sound of the same type to emanate from the same entity - sounds much better
+	on hardware this way esp. rapid fire modes of weapons!
+*/
+channel_t *S_OpenALPickChannel(int entnum, int entchannel)
+{	
+    return NULL;
+}
+
+
+/*
+=================
+S_SpatializeOrigin
+
+Used for spatializing s_channels
+=================
+*/
+void S_SpatializeOrigin (const vec3_t origin, float master_vol, int *left_vol, int *right_vol, int channel)
+{
+    
+}
+
+
+// =======================================================================
+// Start a sound effect
+// =======================================================================
+
+/*
+====================
+S_StartAmbientSound
+
+Starts an ambient, 'one-shot" sound.
+====================
+*/
+
+void S_StartAmbientSound( const vec3_t origin, int entityNum, unsigned char volume, sfxHandle_t sfxHandle )
+{
+	
+}
+
+/*
+====================
+S_StartSound
+
+Validates the parms and ques the sound up
+if pos is NULL, the sound will be dynamically sourced from the entity
+Entchannel 0 will never override a playing sound
+====================
+*/
+void S_StartSound(const vec3_t origin, int entityNum, int entchannel, sfxHandle_t sfxHandle ) 
+{
+	
+}
+
+/*
+==================
+S_StartLocalSound
+==================
+*/
+void S_StartLocalSound( sfxHandle_t sfxHandle, int channelNum ) {
+
+}
+
+
+/*
+==================
+S_StartLocalLoopingSound
+==================
+*/
+void S_StartLocalLoopingSound( sfxHandle_t sfxHandle) {
+
+
+}
+
+// returns length in milliseconds of supplied sound effect...  (else 0 for bad handle now)
+//
+float S_GetSampleLengthInMilliSeconds( sfxHandle_t sfxHandle)
+{
+	return 512 * 1000;
+}
+
+
+/*
+==================
+S_ClearSoundBuffer
+
+If we are about to perform file access, clear the buffer
+so sound doesn't stutter.
+==================
+*/
+void S_ClearSoundBuffer( void ) {
+}
+
+
+// kinda kludgy way to stop a special-use sfx_t playing...
+//
+void S_CIN_StopSound(sfxHandle_t sfxHandle)
+{
+}
+
+
+/*
+==================
+S_StopAllSounds
+==================
+*/
+void S_StopSounds(void)
+{
+}
+
+/*
+==================
+S_StopAllSounds
+ and music
+==================
+*/
+void S_StopAllSounds(void) {
+
+}
+
+/*
+==============================================================
+
+continuous looping sounds are added each frame
+
+==============================================================
+*/
+
+/*
+==================
+S_ClearLoopingSounds
+
+==================
+*/
+void S_ClearLoopingSounds( void )
+{
+	
+
+}
+
+/*
+==================
+S_AddLoopingSound
+
+Called during entity generation for a frame
+Include velocity in case I get around to doing doppler...
+==================
+*/
+void S_AddLoopingSound( int entityNum, const vec3_t origin, const vec3_t velocity, sfxHandle_t sfxHandle ) {
+	
+}
+
+
+/*
+==================
+S_AddAmbientLoopingSound
+==================
+*/
+void S_AddAmbientLoopingSound( const vec3_t origin, unsigned char volume, sfxHandle_t sfxHandle ) 
+{
+	
+}
+
+
+
+/*
+==================
+S_AddLoopSounds
+
+Spatialize all of the looping sounds.
+All sounds are on the same cycle, so any duplicates can just
+sum up the channel multipliers.
+==================
+*/
+void S_AddLoopSounds (void) 
+{
+	
+}
+
+//=============================================================================
+
+/*
+=================
+S_ByteSwapRawSamples
+
+If raw data has been loaded in little endien binary form, this must be done.
+If raw data was calculated, as with ADPCM, this should not be called.
+=================
+*/
+void S_ByteSwapRawSamples( int samples, int width, int s_channels, const byte *data ) {
+	int		i;
+
+	if ( width != 2 ) {
+		return;
+	}
+	if ( LittleShort( 256 ) == 256 ) {
+		return;
+	}
+
+	if ( s_channels == 2 ) {
+		samples <<= 1;
+	}
+	for ( i = 0 ; i < samples ; i++ ) {
+		((short *)data)[i] = LittleShort( ((short *)data)[i] );
+	}
+}
+
+
+portable_samplepair_t *S_GetRawSamplePointer() {
+	return s_rawsamples;
+}
+
+
+/*
+============
+S_RawSamples
+
+Music streaming
+============
+*/
+void S_RawSamples( int samples, int rate, int width, int s_channels, const byte *data, float volume, qboolean bFirstOrOnlyUpdateThisFrame )
+{
+	
+}
+
+//=============================================================================
+
+/*
+=====================
+S_UpdateEntityPosition
+
+let the sound system know where an entity currently is
+======================
+*/
+void S_UpdateEntityPosition( int entityNum, const vec3_t origin )
+{
+	
+}
+
+/*
+============
+S_Respatialize
+
+Change the volumes of all the playing sounds for changes in their positions
+============
+*/
+void S_Respatialize( int entityNum, const vec3_t head, vec3_t axis[3], qboolean inwater )
+{
+}
+
+
+/*
+========================
+S_ScanChannelStarts
+
+Returns qtrue if any new sounds were started since the last mix
+========================
+*/
+qboolean S_ScanChannelStarts( void ) {
+	channel_t		*ch;
+	int				i;
+	qboolean		newSamples;
+
+	return newSamples;
+}
+
+// this is now called AFTER the DMA painting, since it's only the painter calls that cause the MP3s to be unpacked,
+//	and therefore to have data readable by the lip-sync volume calc code.
+//
+void S_DoLipSynchs( const unsigned s_oldpaintedtime )
+{
+	
+}
+
+/*
+============
+S_Update
+
+Called once each time through the main loop
+============
+*/
+void S_Update( void ) {
+	
+}
+
+void S_GetSoundtime(void)
+{
+}
+
+void S_Update_(void) {
+	
+}
+
+
+void UpdateSingleShotSounds()
+{
+	
+}
+
+
+
+
+void UpdateLoopingSounds()
+{
+	
+}
+
+
+void AL_UpdateRawSamples()
+{
+	
+}
+
+
+int S_MP3PreProcessLipSync(channel_t *ch, short *data)
+{
+	return 1;
+}
+
+
+void S_SetLipSyncs()
+{
+	
+}
+
+
+void S_SoundList_f( void ) {
+	
+}
+
+
+/*
+===============================================================================
+
+background music functions
+
+===============================================================================
+*/
+
+int	FGetLittleLong( fileHandle_t f ) {
+	int		v;
+
+	FS_Read( &v, sizeof(v), f );
+
+	return LittleLong( v);
+}
+
+int	FGetLittleShort( fileHandle_t f ) {
+	short	v;
+
+	FS_Read( &v, sizeof(v), f );
+
+	return LittleShort( v);
+}
+
+// returns the length of the data in the chunk, or 0 if not found
+int S_FindWavChunk( fileHandle_t f, char *chunk ) {
+	char	name[5];
+	int		len;
+	int		r;
+
+	name[4] = 0;
+	len = 0;
+	r = FS_Read( name, 4, f );
+	if ( r != 4 ) {
+		return 0;
+	}
+	len = FGetLittleLong( f );
+	if ( len < 0 || len > 0xfffffff ) {
+		len = 0;
+		return 0;
+	}
+	len = (len + 1 ) & ~1;		// pad to word boundary
+//	s_nextWavChunk += len + 8;
+
+	if ( strcmp( name, chunk ) ) {
+		return 0;
+	}
+	return len;
+}
+
+// fixme: need to move this into qcommon sometime?, but too much stuff altered by other people and I won't be able
+//	to compile again for ages if I check that out...
+//
+// DO NOT replace this with a call to FS_FileExists, that's for checking about writing out, and doesn't work for this.
+//
+qboolean S_FileExists( const char *psFilename )
+{
+	fileHandle_t fhTemp;
+
+	FS_FOpenFileRead (psFilename, &fhTemp, qtrue);	// qtrue so I can fclose the handle without closing a PAK
+	if (!fhTemp) 
+		return qfalse;
+	
+	FS_FCloseFile(fhTemp);
+	return qtrue;
+}
+
+// called only by snd_shutdown (from snd_restart or app exit)
+//
+void S_UnCacheDynamicMusic( void )
+{
+
+}
+
+static char gsIntroMusic[MAX_QPATH]={0};
+static char gsLoopMusic [MAX_QPATH]={0};
+
+void S_RestartMusic( void ) 
+{
+
+}
+
+void S_StopBackgroundTrack( void )
+{
+
+	s_rawend = 0;
+}
+
+
+
+// used to be just for dynamic, but now even non-dynamic music has to know whether it should be silent or not...
+//
+static LPCSTR S_Music_GetRequestedState(void)
+{
+	return NULL;
+}
+cvar_t *s_soundpoolmegs = NULL;
+
+
+// currently passing in sfx as a param in case I want to do something with it later.
+//
+byte *SND_malloc(int iSize, sfx_t *sfx) 
+{
+	byte *pData = (byte *) Z_Malloc(iSize, TAG_SND_RAWDATA, qfalse);	// don't bother asking for zeroed mem
+	
+	return pData;
+}
+
+
+// called once-only in EXE lifetime...
+//
+void SND_setup() 
+{	
+	Com_Printf("Sound memory manager started\n");
+}
+
+
+// ask how much mem an sfx has allocated...
+//
+static int SND_MemUsed(sfx_t *sfx)
+{
+	int iSize = 0;
+
+	return iSize;
+}
+
+// free any allocated sfx mem...
+//
+// now returns # bytes freed to help with z_malloc()-fail recovery
+//
+static int SND_FreeSFXMem(sfx_t *sfx)
+{
+	int iBytesFreed = 0;
+	return iBytesFreed;
+}
+
+void S_DisplayFreeMemory() 
+{
+	
+}
+
+void SND_TouchSFX(sfx_t *sfx)
+{
+	sfx->iLastTimeUsed		= Com_Milliseconds()+1;
+	sfx->iLastLevelUsedOn	= RE_RegisterMedia_GetLevel();
+}
+
+
+// currently this is only called during snd_shutdown or snd_restart
+//
+void S_FreeAllSFXMem(void)
+{
+
+}
+
+// returns number of bytes freed up...
+//
+// new param is so we can be usre of not freeing ourselves (without having to rely on possible uninitialised timers etc)
+//
+int SND_FreeOldestSound(sfx_t *pButNotThisOne /* = NULL */) 
+{	
+	int iBytesFreed = 0;
+
+	return iBytesFreed;
+}
+int SND_FreeOldestSound(void)
+{
+	return SND_FreeOldestSound(NULL);	// I had to add a void-arg version of this because of link issues, sigh
+}
+
+
+// just before we drop into a level, ensure the audio pool is under whatever the maximum
+//	pool size is (but not by dropping out sounds used by the current level)...
+//
+// returns qtrue if at least one sound was dropped out, so z_malloc-fail recovery code knows if anything changed
+//
+extern qboolean gbInsideLoadSound;
+qboolean SND_RegisterAudio_LevelLoadEnd(qboolean bDeleteEverythingNotUsedThisLevel /* 99% qfalse */)
+{
+	qboolean bAtLeastOneSoundDropped = qfalse;
+
+	Com_DPrintf( "SND_RegisterAudio_LevelLoadEnd():\n");
+	
+	return bAtLeastOneSoundDropped;
+}
+
+
+#endif

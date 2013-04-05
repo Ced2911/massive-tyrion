@@ -8,11 +8,13 @@
 #include "snd_public.h"
 #include "../mp3code/mp3struct.h"
 
+#ifndef _XBOX
 // Open AL Specific
 #include "openal\al.h"
 #include "openal\alc.h"
 #include "eax\eax.h"
 #include "eax\eaxman.h"
+#endif
 
 // Added for Open AL to know when to mute all sounds (e.g when app. loses focus)
 void S_AL_MuteAllSounds(qboolean bMute);
@@ -57,12 +59,15 @@ typedef struct sfx_s {
 	float			fVolRange;				// used to set the highest volume this sample has at load time - used for lipsynching
 	int				iLastLevelUsedOn;		// used for cacheing purposes
 
+#ifndef _XBOX
 	// Open AL
 	ALuint		Buffer;
+#endif
 	char		*lipSyncData;
 
 	struct sfx_s	*next;					// only used because of hash table when registering
 } sfx_t;
+#
 
 typedef struct {
 	int			channels;
@@ -79,8 +84,10 @@ typedef struct {
 // Open AL specific
 typedef struct
 {
+#ifndef _XBOX
 	ALuint	BufferID;
 	ALuint	Status;
+#endif
 	char	*Data;
 } STREAMINGBUFFER;
 
@@ -122,7 +129,9 @@ typedef struct
 	bool	bProcessed;	// Signifies if this channel / source has been processed
 	bool	bStreaming;	// Set to true if the data needs to be streamed (MP3 or dialogue)
 	STREAMINGBUFFER	buffers[NUM_STREAMING_BUFFERS];	// AL Buffers for streaming
+#ifndef _XBOX
 	ALuint		alSource;		// Open AL Source
+#endif
 	bool		bPlaying;		// Set to true when a sound is playing on this channel / source
 	int			iStartTime;		// Time playback of Source begins
 } channel_t;

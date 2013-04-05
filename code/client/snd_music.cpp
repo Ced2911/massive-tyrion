@@ -13,6 +13,8 @@
 //
 #include "snd_music.h"
 
+#ifndef _XBOX
+
 extern qboolean S_FileExists( const char *psFilename );
 					
 
@@ -1108,3 +1110,4 @@ const char *Music_GetLevelSetName(void)
 
 ///////////////// eof /////////////////////
 
+#endif

@@ -34,7 +34,11 @@ static char	saveGameComment[iSG_COMMENT_SIZE];
 //#define SG_PROFILE	// enable for debug save stats if you want
 
 #ifdef _DEBUG
+#ifdef _XBOX
+#include <xtl.h>
+#else
 #include <windows.h>
+#endif
 #define DEBUGOUT(blah) OutputDebugString(blah);
 #else
 #define DEBUGOUT(blah)
@@ -659,9 +663,10 @@ void SG_WriteServerConfigStrings( void )
 
 void SG_ReadServerConfigStrings( void )
 {
+	int i;
 	// trash the whole table...
 	//
-	for (int i=0; i<MAX_CONFIGSTRINGS; i++)
+	for (i=0; i<MAX_CONFIGSTRINGS; i++)
 	{
 		if (i!=CS_SYSTEMINFO)
 		{
