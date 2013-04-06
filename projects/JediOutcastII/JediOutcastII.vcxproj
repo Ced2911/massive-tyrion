@@ -217,6 +217,7 @@
     <ClCompile Include="..\..\code\ui\ui_main.cpp" />
     <ClCompile Include="..\..\code\ui\ui_shared.cpp" />
     <ClCompile Include="..\..\code\ui\ui_syscalls.cpp" />
+    <ClCompile Include="..\..\code\xdk\xdk_ff.cpp" />
     <ClCompile Include="..\..\code\xdk\xdk_gamma.cpp" />
     <ClCompile Include="..\..\code\xdk\xdk_glimp.cpp" />
     <ClCompile Include="..\..\code\xdk\xdk_input.cpp" />
@@ -398,7 +399,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PreprocessorDefinitions>_DEBUG;_XBOX;__POWERPC__</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_XBOX;__POWERPC__;_JK2EXE;NO_GETENV</PreprocessorDefinitions>
       <CallAttributedProfiling>Callcap</CallAttributedProfiling>
       <AdditionalIncludeDirectories>..\xenon;..\..\code\renderer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

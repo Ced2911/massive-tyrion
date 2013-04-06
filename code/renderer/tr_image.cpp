@@ -1201,6 +1201,14 @@ void LoadTGA ( const char *name, byte **pic, int *width, int *height)
 
 	TGAHeader_t *pHeader = (TGAHeader_t *) pTempLoadedBuffer;
 
+	// bswap tga header !!
+	pHeader->w1stColourMapEntry = LittleShort(pHeader->w1stColourMapEntry);
+	pHeader->wColourMapLength = LittleShort(pHeader->wColourMapLength);
+	pHeader->wImageXOrigin = LittleShort(pHeader->wImageXOrigin);
+	pHeader->wImageYOrigin = LittleShort(pHeader->wImageYOrigin);
+	pHeader->wImageWidth = LittleShort(pHeader->wImageWidth);
+	pHeader->wImageHeight = LittleShort(pHeader->wImageHeight);
+
 	if (pHeader->byColourmapType!=0)
 	{	
 		TGA_FORMAT_ERROR("LoadTGA: colourmaps not supported\n" );		

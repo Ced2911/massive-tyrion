@@ -392,8 +392,12 @@ If running in stereo, RE_BeginFrame will be called twice
 for each RE_EndFrame
 ====================
 */
+extern "C" void XDKQ3BeginFrame();
 void RE_BeginFrame( stereoFrame_t stereoFrame ) {
 	drawBufferCommand_t	*cmd;
+
+	// msaa hook
+	XDKQ3BeginFrame();
 
 	if ( !tr.registered ) {
 		return;

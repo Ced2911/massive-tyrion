@@ -1015,5 +1015,6 @@ void S_PreProcessLipSync(sfx_t *sfx)
 			
 	sfx->lipSyncData[j] = sample;
 }
-
+#else
+qboolean gbInsideLoadSound = qfalse;
 #endif

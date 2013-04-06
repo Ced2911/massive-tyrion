@@ -278,6 +278,7 @@ If no console is visible, the text will appear at the top of the game window
 ================
 */
 void CL_ConsolePrint( char *txt ) {
+#ifndef _XBOX
 	int		y;
 	int		c, l;
 	int		color;
@@ -348,6 +349,9 @@ void CL_ConsolePrint( char *txt ) {
 
 	if (con.current >= 0)
 		con.times[con.current % NUM_CON_TIMES] = cls.realtime;
+#else
+	OutputDebugStringA(txt);
+#endif
 }
 
 

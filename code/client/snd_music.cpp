@@ -1109,5 +1109,10 @@ const char *Music_GetLevelSetName(void)
 }
 
 ///////////////// eof /////////////////////
-
+#else
+sstring_t gsLevelNameFromServer;
+void Music_SetLevelName(const char *psLevelName)
+{	
+	gsLevelNameFromServer = psLevelName;	
+}
 #endif

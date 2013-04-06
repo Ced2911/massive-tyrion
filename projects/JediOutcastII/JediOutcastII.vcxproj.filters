@@ -81,6 +81,9 @@
     <Filter Include="xenon_gl\Header">
       <UniqueIdentifier>{27f01853-4b77-46e6-8a65-6e05ec3cf10f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FF">
+      <UniqueIdentifier>{13b5ddcf-1667-4368-bf30-4b9b6eb10e35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\code\ui\ui_atoms.cpp">
@@ -568,6 +571,9 @@
     </ClCompile>
     <ClCompile Include="..\xenon\GL\gl_vertices.cpp">
       <Filter>xenon_gl\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\xdk\xdk_ff.cpp">
+      <Filter>FF</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

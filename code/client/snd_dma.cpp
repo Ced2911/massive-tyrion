@@ -6346,4 +6346,45 @@ qboolean SND_RegisterAudio_LevelLoadEnd(qboolean bDeleteEverythingNotUsedThisLev
 }
 
 
+void S_StartBackgroundTrack( const char *intro, const char *loop, qboolean bCalledByCGameStart ) {
+
+}
+
+portable_samplepair_t	s_rawsamples[MAX_RAW_SAMPLES];
+
+int			s_rawend;
+int			s_soundStarted;
+qboolean	s_soundMuted;
+
+dma_t		dma;
+
+int			listener_number;
+vec3_t		listener_origin;
+vec3_t		listener_axis[3];
+
+int			s_soundtime;		// sample PAIRS
+int   		s_paintedtime; 		// sample PAIRS
+
+cvar_t		*s_volume;
+cvar_t		*s_volumeVoice;
+cvar_t		*s_testsound;
+cvar_t		*s_khz;
+cvar_t		*s_allowDynamicMusic;
+cvar_t		*s_show;
+cvar_t		*s_mixahead;
+cvar_t		*s_mixPreStep;
+cvar_t		*s_musicVolume;
+cvar_t		*s_separation;
+cvar_t		*s_lip_threshold_1;
+cvar_t		*s_lip_threshold_2;
+cvar_t		*s_lip_threshold_3;
+cvar_t		*s_lip_threshold_4;
+cvar_t		*s_CPUType;
+cvar_t		*s_language;	// note that this is distinct from "g_language"
+cvar_t		*s_dynamix;
+cvar_t		*s_debugdynamic;
+
+int			s_entityWavVol[MAX_GENTITIES];
+
+channel_t   s_channels[MAX_CHANNELS];
 #endif
