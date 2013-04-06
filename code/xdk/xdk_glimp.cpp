@@ -142,11 +142,11 @@ void GLimp_Init( void )
 	// todo
 	//glConfig.numTextureUnits = 1;
 	// glConfig.deviceSupportsGamma = 1;
-	/*
-	qglLockArraysEXT = glLockArraysEXT;
-	qglUnlockArraysEXT = glUnlockArraysEXT;
-	qglMultiTexCoord2fARB = glMultiTexCoord2f;
-	*/
+	
+	qglLockArraysEXT = (&glLockArraysEXT);
+	qglUnlockArraysEXT = &glUnlockArraysEXT;
+	qglMultiTexCoord2fARB = &glMultiTexCoord2f;
+
 	// not working
 	//qglClientActiveTextureARB = glClientActiveTexture;
 	//qglActiveTextureARB = glActiveTexture;

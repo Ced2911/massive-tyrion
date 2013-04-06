@@ -38,11 +38,14 @@
     <ClCompile Include="..\..\code\client\cl_scrn.cpp" />
     <ClCompile Include="..\..\code\client\cl_ui.cpp" />
     <ClCompile Include="..\..\code\client\snd_ambient.cpp" />
-    <ClCompile Include="..\..\code\client\snd_dma.cpp" />
+    <ClCompile Include="..\..\code\client\snd_dma.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\code\client\snd_mem.cpp" />
     <ClCompile Include="..\..\code\client\snd_mix.cpp" />
     <ClCompile Include="..\..\code\client\snd_music.cpp" />
     <ClCompile Include="..\..\code\client\vmachine.cpp" />
+    <ClCompile Include="..\..\code\client\xdk_snd_dma.cpp" />
     <ClCompile Include="..\..\code\game\q_math.cpp" />
     <ClCompile Include="..\..\code\game\q_shared.cpp" />
     <ClCompile Include="..\..\code\ghoul2\g2_api.cpp" />
@@ -402,6 +405,7 @@
       <PreprocessorDefinitions>_DEBUG;_XBOX;__POWERPC__;_JK2EXE;NO_GETENV</PreprocessorDefinitions>
       <CallAttributedProfiling>Callcap</CallAttributedProfiling>
       <AdditionalIncludeDirectories>..\xenon;..\..\code\renderer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

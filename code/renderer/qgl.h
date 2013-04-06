@@ -105,15 +105,15 @@ typedef void (APIENTRY * PFNGLCLIENTACTIVETEXTUREARBPROC) (GLenum target);
 
 // extensions will be function pointers on all platforms
 
-extern	void ( APIENTRY * qglMultiTexCoord2fARB )( GLenum texture, GLfloat s, GLfloat t );
-extern	void ( APIENTRY * qglActiveTextureARB )( GLenum texture );
-extern	void ( APIENTRY * qglClientActiveTextureARB )( GLenum texture );
+extern	void ( * qglMultiTexCoord2fARB )( GLenum texture, GLfloat s, GLfloat t );
+extern	void ( * qglActiveTextureARB )( GLenum texture );
+extern	void ( * qglClientActiveTextureARB )( GLenum texture );
 
-extern	void ( APIENTRY * qglLockArraysEXT) (GLint, GLint);
-extern	void ( APIENTRY * qglUnlockArraysEXT) (void);
+extern	void ( *qglLockArraysEXT) (GLint, GLint);
+extern	void ( *qglUnlockArraysEXT) (void);
 
-extern	void ( APIENTRY * qglPointParameterfEXT)( GLenum, GLfloat);
-extern	void ( APIENTRY * qglPointParameterfvEXT)( GLenum, GLfloat *);
+extern	void ( * qglPointParameterfEXT)( GLenum, GLfloat);
+extern	void ( * qglPointParameterfvEXT)( GLenum, GLfloat *);
 
 #ifdef _NPATCH
 // n-patch extension
