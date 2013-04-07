@@ -70,7 +70,7 @@ void WriteInUseBits(void)
 
 void ReadInUseBits(void)
 {
-	gi.ReadFromSaveGame('INUS', &g_entityInUseBits, sizeof(g_entityInUseBits));
+	gi.ReadFromSaveGame('INUS', &g_entityInUseBits, sizeof(g_entityInUseBits), NULL);
 	// This is only temporary. Once I have converted all the ent->inuse refs,
 	// it won;t be needed -MW.
 	for(int i=0;i<MAX_GENTITIES;i++)
@@ -664,7 +664,8 @@ void InitGame(  const char *mapname, const char *spawntarget, int checkSum, cons
 	gi.Printf ("-----------------------------------\n");
 
 	//randomize the rand functions
-	byte num_calls = (byte)timeGetTime();
+	//byte num_calls = (byte)timeGetTime();
+	byte num_calls = 10;
 
 	for(i = 0; i < (int)num_calls; i++)
 	{
@@ -1037,7 +1038,7 @@ void G_Animate ( gentity_t *self )
 		self->s.frame = self->endFrame;
 		
 		gi.G2API_SetBoneAnimIndex( &self->ghoul2[self->playerModel], self->rootBone, 
-									self->startFrame, self->endFrame, BONE_ANIM_OVERRIDE_FREEZE, 1.0f, cg.time );
+									self->startFrame, self->endFrame, BONE_ANIM_OVERRIDE_FREEZE, 1.0f, cg.time, 0, 0  );
 		return;
 	}
 
@@ -1474,7 +1475,7 @@ void G_LoadSave_WriteMiscData(void)
 
 void G_LoadSave_ReadMiscData(void)
 {
-	gi.ReadFromSaveGame('LCKD', &player_locked, sizeof(player_locked));
+	gi.ReadFromSaveGame('LCKD', &player_locked, sizeof(player_locked), NULL);
 }
 
 

@@ -1229,6 +1229,7 @@ This doesn't actually affect the camera's info, but passed information instead
 
 void CGCam_UpdateShake( vec3_t origin, vec3_t angles )
 {
+	int i;
 	vec3_t	moveDir;
 	float	intensity_scale, intensity;
 
@@ -1248,7 +1249,7 @@ void CGCam_UpdateShake( vec3_t origin, vec3_t angles )
 
 	intensity = client_camera.shake_intensity * intensity_scale;
 
-	for ( int i = 0; i < 3; i++ )
+	for ( i = 0; i < 3; i++ )
 	{
 		moveDir[i] = ( crandom() * intensity );
 	}

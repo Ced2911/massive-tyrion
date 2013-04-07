@@ -8,6 +8,7 @@
 #include "cg_media.h"
 
 #pragma warning(disable: 4035)
+#ifdef _M_IX86
 static long myftol( float f ) 
 {
 	static int tmp;
@@ -15,6 +16,12 @@ static long myftol( float f )
 	__asm fistp tmp
 	__asm mov eax, tmp
 }
+#else
+static long myftol( float f ) 
+{
+	return f;
+}
+#endif
 #pragma warning(default: 4035)
 
 extern int drawnFx;
@@ -1681,7 +1688,7 @@ Roll
 void CPoly::Rotate()
 {
 	vec3_t	temp[MAX_CPOLY_VERTS];
-	float	dif = fabs( mLastFrameTime - theFxHelper.mFrameTime );
+	float	dif = fabsf( mLastFrameTime - theFxHelper.mFrameTime );
 
 	// Very generous check with frameTimes
 	if ( dif > 0.5f * mLastFrameTime )

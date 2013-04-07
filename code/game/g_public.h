@@ -224,7 +224,10 @@ typedef struct {
 Ghoul2 Insert Start
 */
 qhandle_t	(*G2API_PrecacheGhoul2Model)(const char *fileName);
-
+/*
+int			(*G2API_InitGhoul2Model)(CGhoul2Info_v &ghoul2, const char *fileName, int modelIndex, qhandle_t customSkin = NULL,
+								  qhandle_t customShader = NULL, int modelFlags = 0, int lodBias = 0);
+*/
 int			(*G2API_InitGhoul2Model)(CGhoul2Info_v &ghoul2, const char *fileName, int modelIndex, qhandle_t customSkin,
 								  qhandle_t customShader, int modelFlags, int lodBias);
 qboolean	(*G2API_SetLodBias)(CGhoul2Info *ghlInfo, int lodBias);

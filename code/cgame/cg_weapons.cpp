@@ -948,6 +948,7 @@ void CG_AddViewWeapon( playerState_t *ps )
 	weaponData_t  *wData;
 	centity_t	*cent;
 	float		fovOffset, leanOffset;
+	int i ;
 
 	// no gun if in third person view
 	if ( cg.renderingThirdPerson )
@@ -1039,7 +1040,7 @@ void CG_AddViewWeapon( playerState_t *ps )
 	{
 		//add leaning offset
 		leanOffset = cg.snap->ps.leanofs * 0.25f;
-		fovOffset += fabs(cg.snap->ps.leanofs) * -0.1f;
+		fovOffset += fabsf(cg.snap->ps.leanofs) * -0.1f;
 	}
 	else
 	{
@@ -1151,7 +1152,7 @@ void CG_AddViewWeapon( playerState_t *ps )
 	}
 */
 	// add the spinning barrel[s]
-	for (int i = 0; (i < wData->numBarrels); i++)	
+	for (i = 0; (i < wData->numBarrels); i++)	
 	{
 		refEntity_t	barrel;
 		memset( &barrel, 0, sizeof( barrel ) );

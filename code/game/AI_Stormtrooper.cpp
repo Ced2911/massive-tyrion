@@ -347,12 +347,12 @@ ST_Move
 void ST_TransferMoveGoal( gentity_t *self, gentity_t *other );
 static qboolean ST_Move( void )
 {
-	NPCInfo->combatMove = qtrue;//always move straight toward our goal
+	NPCInfo->combatMove = qtrue;//always ::move straight toward our goal
 
 	qboolean	moved = NPC_MoveToGoal( qtrue );
 	navInfo_t	info;
 	
-	//Get the move info
+	//Get the ::move info
 	NAV_GetLastMove( info );
 
 	//FIXME: if we bump into another one of our guys and can't get around him, just stop!
@@ -365,7 +365,7 @@ static qboolean ST_Move( void )
 		}
 	}
 
-	//If our move failed, then reset
+	//If our ::move failed, then reset
 	if ( moved == qfalse )
 	{//FIXME: if we're going to a combat point, need to pick a different one
 		if ( !Q3_TaskIDPending( NPC, TID_MOVE_NAV ) )
@@ -388,7 +388,7 @@ static qboolean ST_Move( void )
 	}
 	else
 	{
-		//First time you successfully move, say what it is you're doing
+		//First time you successfully ::move, say what it is you're doing
 		NPC_ST_SayMovementSpeech();
 	}
 
@@ -804,13 +804,13 @@ static qboolean NPC_ST_InvestigateEvent( int eventID, bool extraSuspicious )
 	{
 		//make it so they can walk right to this point and look at it rather than having to use combatPoints
 		if ( G_ExpandPointToBBox( NPCInfo->investigateGoal, NPC->mins, NPC->maxs, NPC->s.number, ((NPC->clipmask&~CONTENTS_BODY)|CONTENTS_BOTCLIP) ) )
-		{//we were able to move the investigateGoal to a point in which our bbox would fit
+		{//we were able to ::move the investigateGoal to a point in which our bbox would fit
 			//drop the goal to the ground so we can get at it
 			vec3_t	end;
 			trace_t	trace;
 			VectorCopy( NPCInfo->investigateGoal, end );
 			end[2] -= 512;//FIXME: not always right?  What if it's even higher, somehow?
-			gi.trace( &trace, NPCInfo->investigateGoal, NPC->mins, NPC->maxs, end, ENTITYNUM_NONE, ((NPC->clipmask&~CONTENTS_BODY)|CONTENTS_BOTCLIP) );
+			gi.trace( &trace, NPCInfo->investigateGoal, NPC->mins, NPC->maxs, end, ENTITYNUM_NONE, ((NPC->clipmask&~CONTENTS_BODY)|CONTENTS_BOTCLIP), (EG2_Collision)0, 0 );
 			if ( trace.fraction >= 1.0f )
 			{//too high to even bother
 				//FIXME: look at them???
@@ -1021,7 +1021,7 @@ void NPC_BSST_Investigate( void )
 		{
 			ucmd.buttons |= BUTTON_WALKING;
 
-			//Try and move there
+			//Try and ::move there
 			if ( NPC_MoveToGoal( qtrue )  )
 			{
 				//Bump our times
@@ -1185,7 +1185,7 @@ static void ST_CheckMoveState( void )
 {
 	if ( Q3_TaskIDPending( NPC, TID_MOVE_NAV ) )
 	{//moving toward a goal that a script is waiting on, so don't stop for anything!
-		move = qtrue;
+		::move = qtrue;
 	}
 	//See if we're a scout
 	else if ( NPCInfo->squadState == SQUAD_SCOUT )
@@ -1193,7 +1193,7 @@ static void ST_CheckMoveState( void )
 		//If we're supposed to stay put, then stand there and fire
 		if ( TIMER_Done( NPC, "stick" ) == qfalse )
 		{
-			move = qfalse;
+			::move = qfalse;
 			return;
 		}
 
@@ -1206,7 +1206,7 @@ static void ST_CheckMoveState( void )
 				if ( NPCInfo->goalEntity == NPC->enemy )
 				{
 					AI_GroupUpdateSquadstates( NPCInfo->group, NPC, SQUAD_STAND_AND_SHOOT );
-					move = qfalse;
+					::move = qfalse;
 					return;
 				}
 			}
@@ -1222,7 +1222,7 @@ static void ST_CheckMoveState( void )
 		{//we can't scout to him, someone else give it a try
 			AI_GroupUpdateSquadstates( NPCInfo->group, NPC, SQUAD_STAND_AND_SHOOT );
 			TIMER_Set( NPC, "roamTime", Q_irand( 1000, 2000 ) );
-			move = qfalse;
+			::move = qfalse;
 			return;
 		}
 		*/
@@ -1259,20 +1259,20 @@ static void ST_CheckMoveState( void )
 			return;
 		}
 
-		move = qfalse;
+		::move = qfalse;
 		return;
 	}
 	//see if we're just standing around
 	else if ( NPCInfo->squadState == SQUAD_STAND_AND_SHOOT )
 	{//from this squadState we can transition to others?
-		move = qfalse;
+		::move = qfalse;
 		return;
 	}
 	//see if we're hiding
 	else if ( NPCInfo->squadState == SQUAD_COVER )
 	{
 		//Should we duck?
-		move = qfalse;
+		::move = qfalse;
 		return;
 	}
 	//see if we're just standing around
@@ -1280,7 +1280,7 @@ static void ST_CheckMoveState( void )
 	{
 		if ( !NPCInfo->goalEntity )
 		{
-			move = qfalse;
+			::move = qfalse;
 			return;
 		}
 	}
@@ -1367,7 +1367,7 @@ void ST_ResolveBlockedShot( int hit )
 		}
 	}
 	//Hmm, can't resolve this by telling them to duck or telling me to stand
-	//We need to move!
+	//We need to ::move!
 	TIMER_Set( NPC, "roamTime", -1 );
 	TIMER_Set( NPC, "stick", -1 );
 	TIMER_Set( NPC, "duck", -1 );
@@ -1423,7 +1423,7 @@ static void ST_CheckFireState( void )
 					vec3_t	forward, end;
 					AngleVectors( NPC->client->ps.viewangles, forward, NULL, NULL );
 					VectorMA( muzzle, 8192, forward, end );
-					gi.trace( &tr, muzzle, vec3_origin, vec3_origin, end, NPC->s.number, MASK_SHOT );
+					gi.trace( &tr, muzzle, vec3_origin, vec3_origin, end, NPC->s.number, MASK_SHOT, (EG2_Collision)0, 0 );
 					VectorCopy( tr.endpos, impactPos );
 				}
 
@@ -1732,7 +1732,7 @@ void ST_Commander( void )
 				continue;
 			}
 			if ( !(NPCInfo->scriptFlags&SCF_CHASE_ENEMIES) )
-			{//not allowed to move on my own
+			{//not allowed to ::move on my own
 				continue;
 			}
 			//Lost enemy for three minutes?  go into search mode?
@@ -1939,7 +1939,7 @@ void ST_Commander( void )
 					if ( NPC->client->ps.weapon == WP_ROCKET_LAUNCHER &&
 						DistanceSquared( group->enemy->currentOrigin, NPC->currentOrigin ) < MIN_ROCKET_DIST_SQUARED &&
 						NPCInfo->squadState != SQUAD_TRANSITION )
-					{//too close for me to fire my weapon and I'm not already on the move
+					{//too close for me to fire my weapon and I'm not already on the ::move
 						cpFlags |= (CP_AVOID_ENEMY|CP_CLEAR|CP_AVOID);
 						avoidDist = 256;
 					}
@@ -2053,7 +2053,7 @@ void ST_Commander( void )
 					//ALSO: seem to give up when behind an area portal?
 					//since no-one else here has done this, I should be the closest one
 					if ( TIMER_Done( NPC, "roamTime" ) && !Q_irand( 0, group->numGroup) )
-					{//only do this if we're ready to move again and we feel like it
+					{//only do this if we're ready to ::move again and we feel like it
 						cpFlags |= ST_ApproachEnemy( NPC );
 						//set me into scout mode
 						AI_GroupUpdateSquadstates( group, NPC, SQUAD_SCOUT );
@@ -2063,7 +2063,7 @@ void ST_Commander( void )
 				{//group can see and has been shooting at the enemy
 					//see if we should do something fancy?
 					
-					{//we're ready to move
+					{//we're ready to ::move
 						if ( NPCInfo->combatPoint == -1 )
 						{//we're not on a combat point
 							if ( 1 )//!Q_irand( 0, 2 ) )
@@ -2085,7 +2085,7 @@ void ST_Commander( void )
 									cpFlags |= (CP_CLEAR|CP_COVER|CP_FLANK|CP_APPROACH_ENEMY);
 								}
 								else if ( (group->morale-group->numGroup<0) )
-								{//better move!
+								{//better ::move!
 									cpFlags |= ST_GetCPFlags();
 								}
 								else
@@ -2105,7 +2105,7 @@ void ST_Commander( void )
 									TIMER_Set( NPC, "stick", Q_irand( 2000, 5000 ) );
 								}
 								else if ( (group->morale-group->numGroup>0) )
-								{//try to move in on the enemy
+								{//try to ::move in on the enemy
 									cpFlags |= ST_ApproachEnemy( NPC );
 									//set me into scout mode
 									AI_GroupUpdateSquadstates( group, NPC, SQUAD_SCOUT );
@@ -2274,14 +2274,14 @@ void ST_Commander( void )
 				TIMER_Set( NPC, "verifyCP", Q_irand( 1000, 3000 ) );//don't make sure you're in your CP for 1 - 3 seconds
 				NPC_SetCombatPoint( cp );
 				NPC_SetMoveGoal( NPC, level.combatPoints[cp].origin, 8, qtrue, cp );
-				//okay, try a move right now to see if we can even get there
+				//okay, try a ::move right now to see if we can even get there
 
 				//if ( ST_Move() )
 				{//we actually can get to it, so okay to say you're going there.
-					//FIXME: Hmm... any way we can store this move info so we don't have to do it again
+					//FIXME: Hmm... any way we can store this ::move info so we don't have to do it again
 					//		when our turn to think comes up?
 
-					//set us up so others know we're on the move
+					//set us up so others know we're on the ::move
 					if ( squadState != SQUAD_IDLE )
 					{
 						AI_GroupUpdateSquadstates( group, NPC, squadState );
@@ -2353,7 +2353,7 @@ void ST_Commander( void )
 						}
 					}
 					*/
-				}//else: nothing, a failed move should clear the combatPoint and you can try again next frame
+				}//else: nothing, a failed ::move should clear the combatPoint and you can try again next frame
 			}
 			else if ( NPCInfo->squadState == SQUAD_SCOUT )
 			{//we couldn't find a combatPoint by the player, so just go after him directly
@@ -2451,7 +2451,7 @@ void NPC_BSST_Attack( void )
 	}
 
 	enemyLOS = enemyCS = enemyInFOV = qfalse;
-	move = qtrue;
+	::move = qtrue;
 	faceEnemy = qfalse;
 	shoot = qfalse;
 	hitAlly = qfalse;
@@ -2583,29 +2583,29 @@ void NPC_BSST_Attack( void )
 	if ( !(NPCInfo->scriptFlags&SCF_CHASE_ENEMIES) )
 	{//not supposed to chase my enemies
 		if ( NPCInfo->goalEntity == NPC->enemy )
-		{//goal is my entity, so don't move
-			move = qfalse;
+		{//goal is my entity, so don't ::move
+			::move = qfalse;
 		}
 	}
 
 	if ( NPC->client->fireDelay && NPC->s.weapon == WP_ROCKET_LAUNCHER )
 	{
-		move = qfalse;
+		::move = qfalse;
 	}
 
-	if ( move )
-	{//move toward goal
+	if ( ::move )
+	{//::move toward goal
 		if ( NPCInfo->goalEntity )//&& ( NPCInfo->goalEntity != NPC->enemy || enemyDist > 10000 ) )//100 squared
 		{
-			move = ST_Move();
+			::move = ST_Move();
 		}
 		else
 		{
-			move = qfalse;
+			::move = qfalse;
 		}
 	}
 
-	if ( !move )
+	if ( !::move )
 	{
 		if ( !TIMER_Done( NPC, "duck" ) )
 		{
@@ -2627,14 +2627,14 @@ void NPC_BSST_Attack( void )
 
 	if ( !faceEnemy )
 	{//we want to face in the dir we're running
-		if ( !move )
+		if ( !::move )
 		{//if we haven't moved, we should look in the direction we last looked?
 			VectorCopy( NPC->client->ps.viewangles, NPCInfo->lastPathAngles );
 		}
 		NPCInfo->desiredYaw = NPCInfo->lastPathAngles[YAW];
 		NPCInfo->desiredPitch = 0;
 		NPC_UpdateAngles( qtrue, qtrue );
-		if ( move )
+		if ( ::move )
 		{//don't run away and shoot
 			shoot = qfalse;
 		}
@@ -2678,7 +2678,7 @@ void NPC_BSST_Attack( void )
 			//NASTY
 			if ( NPC->s.weapon == WP_ROCKET_LAUNCHER 
 				&& (ucmd.buttons&BUTTON_ATTACK) 
-				&& !move
+				&& !::move
 				&& g_spskill->integer > 1 
 				&& !Q_irand( 0, 3 ) )
 			{//every now and then, shoot a homing rocket

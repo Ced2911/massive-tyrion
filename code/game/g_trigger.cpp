@@ -788,7 +788,7 @@ void trigger_push_checkclear( gentity_t *self )
 	VectorScale( center, 0.5, center );
 
 	gentity_t *target = G_Find( NULL, FOFS(targetname), self->target );
-	gi.trace( &trace, center, vec3_origin, vec3_origin, target->currentOrigin, ENTITYNUM_NONE, CONTENTS_SOLID );
+	gi.trace( &trace, center, vec3_origin, vec3_origin, target->currentOrigin, ENTITYNUM_NONE, CONTENTS_SOLID, (EG2_Collision)0, 0 );
 
 	if ( trace.fraction >= 1.0f )
 	{//can trace, turn on
@@ -1156,7 +1156,8 @@ void hurt_touch( gentity_t *self, gentity_t *other, trace_t *trace )
 	{//Increase dmg over time
 		if ( self->attackDebounceTime < self->delay )
 		{//FIXME: this is for the entire trigger, not per person, so if someone else jumped in after you were in it for 5 seconds, they'd get damaged faster
-			actualDmg = floor( self->damage * self->attackDebounceTime / self->delay );
+			//actualDmg = floor( self->damage * self->attackDebounceTime / self->delay ); // XBOX
+			actualDmg = floorf( self->damage * self->attackDebounceTime / self->delay ); // XBOX
 		}
 		self->attackDebounceTime += FRAMETIME;
 

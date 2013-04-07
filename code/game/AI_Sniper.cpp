@@ -131,12 +131,12 @@ ST_Move
 
 static qboolean Sniper_Move( void )
 {
-	NPCInfo->combatMove = qtrue;//always move straight toward our goal
+	NPCInfo->combatMove = qtrue;//always ::move straight toward our goal
 
 	qboolean	moved = NPC_MoveToGoal( qtrue );
 	navInfo_t	info;
 	
-	//Get the move info
+	//Get the ::move info
 	NAV_GetLastMove( info );
 
 	//FIXME: if we bump into another one of our guys and can't get around him, just stop!
@@ -149,7 +149,7 @@ static qboolean Sniper_Move( void )
 		}
 	}
 
-	//If our move failed, then reset
+	//If our ::move failed, then reset
 	if ( moved == qfalse )
 	{//couldn't get to enemy
 		if ( (NPCInfo->scriptFlags&SCF_CHASE_ENEMIES) && NPCInfo->goalEntity && NPCInfo->goalEntity == NPC->enemy )
@@ -317,7 +317,7 @@ static void Sniper_CheckMoveState( void )
 	{
 		if ( NPCInfo->goalEntity == NPC->enemy )
 		{
-			move = qfalse;
+			::move = qfalse;
 			return;
 		}
 	}
@@ -337,7 +337,7 @@ static void Sniper_CheckMoveState( void )
 	{
 		if ( !NPCInfo->goalEntity )
 		{
-			move = qfalse;
+			::move = qfalse;
 			return;
 		}
 	}
@@ -428,7 +428,7 @@ static void Sniper_ResolveBlockedShot( void )
 		}
 	}
 	//Hmm, can't resolve this by telling them to duck or telling me to stand
-	//We need to move!
+	//We need to ::move!
 	TIMER_Set( NPC, "roamTime", -1 );
 	TIMER_Set( NPC, "stick", -1 );
 	TIMER_Set( NPC, "duck", -1 );
@@ -560,7 +560,7 @@ void Sniper_FaceEnemy( void )
 								VectorMA( target, NPC->enemy->mins[2]*Q_flrand(1.5, 4), up, target );
 							}
 						}
-						gi.trace( &trace, muzzle, vec3_origin, vec3_origin, target, NPC->s.number, MASK_SHOT );
+						gi.trace( &trace, muzzle, vec3_origin, vec3_origin, target, NPC->s.number, MASK_SHOT, (EG2_Collision)0, 0 );
 						hit = Sniper_EvaluateShot( trace.entityNum );
 					}
 					NPC->count++;
@@ -667,7 +667,7 @@ void NPC_BSSniper_Attack( void )
 	}
 
 	enemyLOS = enemyCS = qfalse;
-	move = qtrue;
+	::move = qtrue;
 	faceEnemy = qfalse;
 	shoot = qfalse;
 	enemyDist = DistanceSquared( NPC->currentOrigin, NPC->enemy->currentOrigin );
@@ -678,7 +678,7 @@ void NPC_BSSniper_Attack( void )
 			if ( NPCInfo->scriptFlags & SCF_ALT_FIRE )
 			{//use primary fire
 				trace_t	trace;
-				gi.trace ( &trace, NPC->enemy->currentOrigin, NPC->enemy->mins, NPC->enemy->maxs, NPC->currentOrigin, NPC->enemy->s.number, NPC->enemy->clipmask );
+				gi.trace ( &trace, NPC->enemy->currentOrigin, NPC->enemy->mins, NPC->enemy->maxs, NPC->currentOrigin, NPC->enemy->s.number, NPC->enemy->clipmask, (EG2_Collision)0, 0 );
 				if ( !trace.allsolid && !trace.startsolid && (trace.fraction == 1.0 || trace.entityNum == NPC->s.number ) )
 				{//he can get right to me
 					NPCInfo->scriptFlags &= ~SCF_ALT_FIRE;
@@ -758,19 +758,19 @@ void NPC_BSSniper_Attack( void )
 	//See if we should override shooting decision with any special considerations
 	Sniper_CheckFireState();
 
-	if ( move )
-	{//move toward goal
+	if ( ::move )
+	{//::move toward goal
 		if ( NPCInfo->goalEntity )//&& ( NPCInfo->goalEntity != NPC->enemy || enemyDist > 10000 ) )//100 squared
 		{
-			move = Sniper_Move();
+			::move = Sniper_Move();
 		}
 		else
 		{
-			move = qfalse;
+			::move = qfalse;
 		}
 	}
 
-	if ( !move )
+	if ( !::move )
 	{
 		if ( !TIMER_Done( NPC, "duck" ) )
 		{
@@ -803,7 +803,7 @@ void NPC_BSSniper_Attack( void )
 
 	if ( !faceEnemy )
 	{//we want to face in the dir we're running
-		if ( move )
+		if ( ::move )
 		{//don't run away and shoot
 			NPCInfo->desiredYaw = NPCInfo->lastPathAngles[YAW];
 			NPCInfo->desiredPitch = 0;

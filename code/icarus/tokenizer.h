@@ -16,7 +16,11 @@
 
 using namespace std;
 
+#ifdef _XBOX
+#include <xtl.h>
+#else
 #include <windows.h>
+#endif
 
 typedef unsigned char byte;
 typedef unsigned short word;

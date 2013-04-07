@@ -162,7 +162,7 @@ static const char *GetCustomSound_VariantCapped(const char *ppsTable[], int iEnt
 
 	if (iVariantCap || bForceVariant1)
 	{
-		char *p = strchr(ppsTable[iEntryNum],'.');
+		char *p = (char*)strchr(ppsTable[iEntryNum],'.');
 		if (p && p-2 > ppsTable[iEntryNum] && isdigit(p[-1]) && !isdigit(p[-2]))
 		{
 			int iThisVariant = p[-1]-'0';
@@ -886,7 +886,7 @@ qboolean CG_RunLerpFrame( clientInfo_t *ci, lerpFrame_t *lf, int newAnimation, f
 		}
 		else*/
 		{
-			animFrameTime = fabs(anim->frameLerp);
+			animFrameTime = fabsf(anim->frameLerp);
 			
 			//special hack for player to ensure quick weapon change
 			if ( entNum == 0 )
@@ -1110,7 +1110,7 @@ void CG_PlayerAnimSounds( int animFileIndex, qboolean torso, int oldFrame, int f
 	{
 		animSounds = level.knownAnimFileSets[animFileIndex].legsAnimSnds;
 	}
-	if ( fabs(oldFrame-frame) > 1 && cg_reliableAnimSounds.integer )
+	if ( fabsf(oldFrame-frame) > 1 && cg_reliableAnimSounds.integer )
 	{//given a range, see if keyFrame falls in that range
 		int oldAnim, anim;
 		if ( torso )
@@ -1176,12 +1176,12 @@ void CG_PlayerAnimSounds( int animFileIndex, qboolean torso, int oldFrame, int f
 		{//exact match
 			match = qtrue;
 		}
-		else if ( fabs(oldFrame-frame) > 1 && cg_reliableAnimSounds.integer )
+		else if ( fabsf(oldFrame-frame) > 1 && cg_reliableAnimSounds.integer )
 		{//given a range, see if keyFrame falls in that range
 			if ( inSameAnim )
 			{//if changed anims altogether, sorry, the sound is lost
-				if ( fabs(oldFrame-animSounds[i].keyFrame) <= 3
-					 || fabs(frame-animSounds[i].keyFrame) <= 3 )
+				if ( fabsf(oldFrame-animSounds[i].keyFrame) <= 3
+					 || fabsf(frame-animSounds[i].keyFrame) <= 3 )
 				{//must be at least close to the keyframe
 					if ( animBackward )
 					{//animation plays backwards
@@ -4595,7 +4595,7 @@ Ghoul2 Insert End
 	}
 	else
 	{
-		gi.trace( &trace, cent->lerpOrigin, NULL, NULL, cent->gent->client->renderInfo.muzzlePoint, cent->currentState.number, CONTENTS_SOLID );
+		gi.trace( &trace, cent->lerpOrigin, NULL, NULL, cent->gent->client->renderInfo.muzzlePoint, cent->currentState.number, CONTENTS_SOLID, (EG2_Collision)0, 0 );
 	}
 
 	if ( trace.fraction < 1.0f )
@@ -4611,12 +4611,12 @@ Ghoul2 Insert End
 			if ( i )
 			{//tracing from end to base
 				//cgi_CM_BoxTrace( &trace, end, org_, NULL, NULL, 0, MASK_SHOT );
-				gi.trace( &trace, end, NULL, NULL, org_, ENTITYNUM_NONE, MASK_SOLID );
+				gi.trace( &trace, end, NULL, NULL, org_, ENTITYNUM_NONE, MASK_SOLID, (EG2_Collision)0, 0 );
 			}
 			else
 			{//tracing from base to end
 				//cgi_CM_BoxTrace( &trace, end, org_, NULL, NULL, 0, MASK_SHOT );
-				gi.trace( &trace, org_, NULL, NULL, end, ENTITYNUM_NONE, MASK_SOLID|CONTENTS_WATER|CONTENTS_SLIME );
+				gi.trace( &trace, org_, NULL, NULL, end, ENTITYNUM_NONE, MASK_SOLID|CONTENTS_WATER|CONTENTS_SLIME, (EG2_Collision)0, 0 );
 			}
 			
 			if ( trace.fraction < 1.0f )
