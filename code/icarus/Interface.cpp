@@ -4,6 +4,8 @@
 //	is not directly portable from engine to engine.
 //
 //	-- jweier
+#include "../cgame/cg_headers.h"
+#include "../game/g_shared.h"
 
 #include "Interface.h"
 

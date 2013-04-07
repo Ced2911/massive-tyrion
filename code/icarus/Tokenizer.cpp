@@ -494,13 +494,17 @@ bool CParseFile::Init(LPCTSTR filename, CTokenizer* tokenizer)
 	strcpy(m_fileName, filename);
 		DWORD dwAccess = GENERIC_READ;
 		DWORD dwShareMode = FILE_SHARE_WRITE | FILE_SHARE_READ;
+		DWORD dwCreateFlag = OPEN_EXISTING;
+#ifndef _XBOX
 		SECURITY_ATTRIBUTES sa;
 		sa.nLength = sizeof(sa);
 		sa.lpSecurityDescriptor = NULL;
 		sa.bInheritHandle = 0;
-		DWORD dwCreateFlag = OPEN_EXISTING;
 
 		m_fileHandle = CreateFile(filename, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+#else
+		m_fileHandle = CreateFile(filename, dwAccess, dwShareMode, NULL, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+#endif
 
 		if (m_fileHandle == (HANDLE)-1)
 		{

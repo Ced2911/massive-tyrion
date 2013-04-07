@@ -1,6 +1,6 @@
 // this include must remain at the top of every bg_xxxx CPP file
 #include "common_headers.h"
-
+#include "g_headers.h"
 #include "q_shared.h"
 #include "bg_public.h"
 #include "bg_local.h"

@@ -1,11 +1,11 @@
 // Task Manager 
 //
 //	-- jweier
-
+#include "../cgame/cg_headers.h"
+#include "../game/g_shared.h"
 
 // this include must remain at the top of every Icarus CPP file
 #include "icarus.h"
-
 
 
 #include <assert.h>

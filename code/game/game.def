@@ -1,3 +1,4 @@
+LIBRARY      DLLModule
 EXPORTS
 	GetGameAPI
 	vmMain

@@ -10,6 +10,7 @@
 #include "bg_local.h"
 #include "anims.h"
 #include "wp_saber.h"
+#include "g_headers.h"
 
 extern qboolean PM_InAnimForSaberMove( int anim, int saberMove );
 extern qboolean PM_InForceGetUp( playerState_t *ps );

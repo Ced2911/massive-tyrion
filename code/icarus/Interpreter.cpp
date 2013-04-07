@@ -165,7 +165,11 @@ int CInterpreter::Error( char *format, ... )
 	vsprintf (error_msg, format, argptr);
 	va_end (argptr);
 
+#ifndef _XBOX
 	strcpy((char *) work_dir, getcwd( (char *) &work_dir, 1024 ) );
+#else
+	strcpy((char *) work_dir, "game:" );
+#endif
 
 	if (error_file[1] == ':')
 	{

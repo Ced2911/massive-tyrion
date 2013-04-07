@@ -16,6 +16,7 @@
 #include "anims.h"
 #include "../cgame/cg_local.h"	// yeah I know this is naughty, but we're shipping soon...
 #include "wp_saber.h"
+#include "g_headers.h"
 #include <float.h>
 
 extern qboolean G_DoDismemberment( gentity_t *self, vec3_t point, int mod, int damage, int hitLoc, qboolean force = qfalse );
@@ -375,7 +376,7 @@ static float PM_CmdScale( usercmd_t *cmd )
 	if ( !max ) {
 		return 0;
 	}
-	total = sqrt(	( cmd->forwardmove * cmd->forwardmove ) 
+	total = sqrtf(	( cmd->forwardmove * cmd->forwardmove ) 
 				  + ( cmd->rightmove * cmd->rightmove ) 
 				  + ( cmd->upmove * cmd->upmove ) );
 	
@@ -6473,7 +6474,7 @@ qboolean PM_SaberLocked( void )
 		{//lock just ended
 			int strength = G_SaberLockStrength( gent );
 			int eStrength = G_SaberLockStrength( genemy );
-			if ( strength > 1 && eStrength > 1 && !Q_irand( 0, fabs(strength-eStrength)+1 ) )
+			if ( strength > 1 && eStrength > 1 && !Q_irand( 0, fabsf(strength-eStrength)+1 ) )
 			{//both knock each other down!
 				PM_SaberLockBreak( gent, genemy, LOCK_DRAW, 0 );
 			}

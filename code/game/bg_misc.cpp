@@ -7,7 +7,7 @@
 #include "g_local.h"
 #include "bg_public.h"
 #include "g_items.h"
-
+#include "g_headers.h"
 
 extern weaponData_t weaponData[WP_NUM_WEAPONS];
 extern ammoData_t ammoData[AMMO_MAX];
