@@ -3503,7 +3503,12 @@ qboolean ItemParse_cvarStrList( itemDef_t *item)
 			PC_ParseWarning("end of file inside menu item\n");
 			return qfalse;
 		}
+#ifdef _XBOX
+		// Xbox 360 have ptr mapped after 0x7FFF.FFFF
+		if ((int)token < 0xFFFF0000)
+#else
 		if ((int)token > 0)	//a normal StringAlloc ptr
+#endif
 		{
 			if (*token == '}') 
 			{
@@ -3576,7 +3581,12 @@ qboolean ItemParse_cvarFloatList( itemDef_t *item)
 			PC_ParseWarning("end of file inside menu item\n");
 			return qfalse;
 		}
+#ifdef _XBOX
+		// Xbox 360 have ptr mapped after 0x7FFF.FFFF
+		if ((int)token < 0xFFFF0000)
+#else
 		if ((int)token > 0)	//a normal StringAlloc ptr
+#endif
 		{
 			if (*token == '}') 
 			{
