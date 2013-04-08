@@ -366,7 +366,7 @@ void *Sys_GetGameAPI (void *parms)
 #endif //NDEBUG
 
 #elif defined _XBOX
-	const char *gamename = "jk2gameaxp.xex";
+	const char *gamename = "gamedll.xex";
 #ifdef NDEBUG
 	const char *debugdir = "releasexex";
 #else
@@ -379,8 +379,13 @@ void *Sys_GetGameAPI (void *parms)
 		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 
 	// check the current debug directory first for development purposes
+#ifndef _XBOX
 	_getcwd (cwd, sizeof(cwd));
 	Com_sprintf (name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
+#else
+	_getcwd (cwd, sizeof(cwd));
+	Com_sprintf (name, sizeof(name), "%s/%s/%s", "game:", debugdir, gamename);
+#endif
 	game_library = LoadLibrary ( name );
 	if (game_library)
 	{
