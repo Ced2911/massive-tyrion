@@ -632,6 +632,10 @@ void CGLImpl::UpdateStates() {
 	}
 	*/
 
+#if 0 // Debug purpose
+	device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+#endif
+
 	state.dirty = 0;
 }
 

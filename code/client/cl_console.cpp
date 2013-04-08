@@ -350,7 +350,7 @@ void CL_ConsolePrint( char *txt ) {
 	if (con.current >= 0)
 		con.times[con.current % NUM_CON_TIMES] = cls.realtime;
 #else
-	OutputDebugStringA(txt);
+	//OutputDebugStringA(txt);
 #endif
 }
 

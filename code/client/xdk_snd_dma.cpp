@@ -379,7 +379,20 @@ S_BeginRegistration
 */
 void S_BeginRegistration( void )
 {
-	
+	if (s_numSfx == 0) {
+		SND_setup();
+
+		s_numSfx = 0;
+		memset( s_knownSfx, 0, sizeof( s_knownSfx ) );
+		memset(sfxHash, 0, sizeof(sfx_t *)*LOOP_HASH);
+
+#ifdef _DEBUG
+		sfx_t *sfx = S_FindName( "***DEFAULT***" );
+		S_DefaultSound( sfx );
+#else
+		S_RegisterSound("sound/null.wav");
+#endif
+	}
 }
 
 
