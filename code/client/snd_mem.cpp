@@ -8,7 +8,6 @@
 #include "snd_local.h"
 #include "cl_mp3.h"
 
-#ifndef _XBOX
 // Open AL
 void S_PreProcessLipSync(sfx_t *sfx);
 extern int s_UseOpenAL;
@@ -728,7 +727,7 @@ static qboolean S_LoadSound_Actual( sfx_t *sfx )
 	int		size;
 	char	*psExt;
 	char	sLoadName[MAX_QPATH];
-	ALuint  Buffer;
+	unsigned int  Buffer;
 	
 	int		len = strlen(sfx->sSoundName);
 	if (len<5)
@@ -780,7 +779,7 @@ static qboolean S_LoadSound_Actual( sfx_t *sfx )
 				)
 			{
 //				Com_DPrintf("(Keeping file \"%s\" as MP3)\n",sLoadName);
-
+#ifndef _XBOX
 				if (s_UseOpenAL)
 				{
 					// Create space for lipsync data (4 lip sync values per streaming AL buffer)
@@ -789,6 +788,7 @@ static qboolean S_LoadSound_Actual( sfx_t *sfx )
 					else
 						sfx->lipSyncData = NULL;
 				}
+#endif
 			}
 			else
 			{
@@ -821,7 +821,7 @@ static qboolean S_LoadSound_Actual( sfx_t *sfx )
 										);
 
 						S_LoadSound_Finalize(&info,sfx,pbUnpackBuffer);
-
+#ifndef _XBOX
 						// Open AL
 						if (s_UseOpenAL)
 						{
@@ -850,7 +850,7 @@ static qboolean S_LoadSound_Actual( sfx_t *sfx )
 								}
 							}
 						}
-
+#endif
 						Z_Free(pbUnpackBuffer);
 					}
 				}
@@ -891,7 +891,7 @@ static qboolean S_LoadSound_Actual( sfx_t *sfx )
 		sfx->iSoundLengthInSamples	 = info.samples;
 		sfx->pSoundData = NULL;
 		ResampleSfx( sfx, info.rate, info.width, data + info.dataofs );
-
+#ifndef _XBOX
 		// Open AL
 		if (s_UseOpenAL)
 		{
@@ -921,7 +921,7 @@ static qboolean S_LoadSound_Actual( sfx_t *sfx )
 				}
 			}
 		}
-
+#endif
 		Z_Free(samples);
 	}
 	
@@ -1015,6 +1015,3 @@ void S_PreProcessLipSync(sfx_t *sfx)
 			
 	sfx->lipSyncData[j] = sample;
 }
-#else
-qboolean gbInsideLoadSound = qfalse;
-#endif

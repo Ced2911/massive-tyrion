@@ -412,20 +412,84 @@ Creates a default buzz sound if the file can't be loaded
 */
 sfxHandle_t	S_RegisterSound( const char *name) 
 {
+	sfx_t	*sfx;
+
+	if (!s_soundStarted) {
 		return 0;
+	}
+
+	if ( strlen( name ) >= MAX_QPATH ) {		
+		Com_Printf( S_COLOR_RED"Sound name exceeds MAX_QPATH - %s\n", name );
+		return 0;
+	}
+
+	sfx = S_FindName( name );
+
+	SND_TouchSFX(sfx);
+
+	if ( sfx->bDefaultSound )
+		return 0;
+
+	
+	if ( sfx->pSoundData )
+	{
+		return sfx - s_knownSfx;
+	}
+
+	sfx->bInMemory = qfalse;
+
+	S_memoryLoad(sfx);
+
+	if ( sfx->bDefaultSound ) {
+#ifndef FINAL_BUILD
+		Com_Printf( S_COLOR_YELLOW "WARNING: could not find %s - using default\n", sfx->sSoundName );
+#endif
+
+
+		return 0;
+	}
+
+	return sfx - s_knownSfx;
 }
 
 void S_memoryLoad(sfx_t	*sfx) 
 {
-	
+	// load the sound file...
+	//
+	if ( !S_LoadSound( sfx ) ) 
+	{
+		//		Com_Printf( S_COLOR_YELLOW "WARNING: couldn't load sound: %s\n", sfx->sSoundName );
+		sfx->bDefaultSound = qtrue;
+	}
+	sfx->bInMemory = qtrue;
 }
 
+// instead of clearing a whole channel_t struct, we're going to skip the MP3SlidingDecodeBuffer[] buffer in the middle...
+//
+static inline void Channel_Clear(channel_t *ch)
+{
+	// memset (ch, 0, sizeof(*ch));
 
+	memset(ch,0,offsetof(channel_t,MP3SlidingDecodeBuffer));
+
+	byte *const p = (byte *)ch + offsetof(channel_t,MP3SlidingDecodeBuffer) + sizeof(ch->MP3SlidingDecodeBuffer);
+
+	memset(p,0,(sizeof(*ch) - offsetof(channel_t,MP3SlidingDecodeBuffer)) - sizeof(ch->MP3SlidingDecodeBuffer));
+}
 
 //=============================================================================
 static qboolean S_CheckChannelStomp( int chan1, int chan2 )
-{
-	
+{	
+	if ( chan1 == chan2 )
+	{
+		return qtrue;
+	}
+
+	if ( ( chan1 == CHAN_VOICE || chan1 == CHAN_VOICE_ATTEN || chan1 == CHAN_VOICE_GLOBAL  ) && ( chan2 == CHAN_VOICE || chan2 == CHAN_VOICE_ATTEN || chan2 == CHAN_VOICE_GLOBAL ) )
+	{
+		return qtrue;
+	}
+
 	return qfalse;
 }
 
@@ -443,8 +507,66 @@ S_PickChannel
 //
 channel_t *S_PickChannel(int entnum, int entchannel)
 {
-   
-	return NULL;
+	int			ch_idx;
+	channel_t	*ch, *firstToDie;
+	qboolean	foundChan = qfalse;
+
+	if ( entchannel<0 ) {
+		Com_Error (ERR_DROP, "S_PickChannel: entchannel<0");
+	}
+
+	// Check for replacement sound, or find the best one to replace
+
+    firstToDie = &s_channels[0];
+
+	for ( int pass = 0; (pass < ((entchannel == CHAN_AUTO || entchannel == CHAN_LESS_ATTEN)?1:2)) && !foundChan; pass++ )
+	{
+		for (ch_idx = 0, ch = &s_channels[0]; ch_idx < MAX_CHANNELS ; ch_idx++, ch++ ) 
+		{
+			if ( entchannel == CHAN_AUTO || entchannel == CHAN_LESS_ATTEN || pass > 0 )
+			{//if we're on the second pass, just find the first open chan
+				if ( !ch->thesfx )
+				{//grab the first open channel
+					firstToDie = ch;
+					break;
+				}
+
+			}
+			else if ( ch->entnum == entnum && S_CheckChannelStomp( ch->entchannel, entchannel ) ) 
+			{
+				// always override sound from same entity
+				if ( s_show->integer == 1 && ch->thesfx ) {
+					Com_Printf( S_COLOR_YELLOW"...overrides %s\n", ch->thesfx->sSoundName );
+					ch->thesfx = 0;	//just to clear the next error msg
+				}
+				firstToDie = ch;
+				foundChan = qtrue;
+				break;
+			}
+
+			// don't let anything else override local player sounds
+			if ( ch->entnum == listener_number 	&& entnum != listener_number && ch->thesfx) {
+				continue;
+			}
+
+			// don't override loop sounds
+			if ( ch->loopSound ) {
+				continue;
+			}
+
+			if ( ch->startSample < firstToDie->startSample ) {
+				firstToDie = ch;
+			}
+		}
+	}
+
+	if ( s_show->integer == 1 && firstToDie->thesfx ) {
+		Com_Printf( S_COLOR_RED"***kicking %s\n", firstToDie->thesfx->sSoundName );
+	}
+
+	Channel_Clear(firstToDie);	// memset(firstToDie, 0, sizeof(*firstToDie));
+    
+	return firstToDie;
 }
 
 

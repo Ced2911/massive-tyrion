@@ -46,6 +46,7 @@
     <ClCompile Include="..\..\code\client\snd_music.cpp" />
     <ClCompile Include="..\..\code\client\vmachine.cpp" />
     <ClCompile Include="..\..\code\client\xdk_snd_dma.cpp" />
+    <ClCompile Include="..\..\code\game\genericparser2.cpp" />
     <ClCompile Include="..\..\code\game\q_math.cpp" />
     <ClCompile Include="..\..\code\game\q_shared.cpp" />
     <ClCompile Include="..\..\code\ghoul2\g2_api.cpp" />

@@ -225,11 +225,7 @@ IN_Shutdown
 void IN_Shutdown( void ) {
 	IN_DeactivateMouse();
 	IN_ShutdownDIMouse();
-	//IN_ShutdownMIDI();
 	Cmd_RemoveCommand("midiinfo" );
-#ifndef _IMMERSION
-	FF_Shutdown();
-#endif // _IMMERSION
 }
 
 
@@ -263,9 +259,6 @@ void IN_Init( void ) {
 	joy_ybutton			= Cvar_Get ("joy_ybutton",			"0",		CVAR_ARCHIVE);	// treat axis as a button
 
 	IN_Startup();
-#ifndef _IMMERSION
-	//FF_Init();
-#endif // _IMMERSION
 }
 
 

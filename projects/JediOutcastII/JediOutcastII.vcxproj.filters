@@ -578,6 +578,9 @@
     <ClCompile Include="..\..\code\client\xdk_snd_dma.cpp">
       <Filter>Source\client</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\code\game\genericparser2.cpp">
+      <Filter>Source\client</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\code\ui\ui.def">
