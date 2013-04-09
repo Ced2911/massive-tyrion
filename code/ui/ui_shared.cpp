@@ -4930,8 +4930,12 @@ void Item_Text_Paint(itemDef_t *item)
 	}
 	else 
 	{
-		textPtr = item->text;
+#ifdef _XBOX
+		// Xbox 360 have ptr mapped after 0x7FFF.FFFF
+		if ((int)textPtr > 0xFFFF0000)
+#else
 		if ((int)textPtr < 0)
+#endif
 		{
 			textPtr = SP_GetStringText(-(int)textPtr);
 		}
@@ -4950,7 +4954,12 @@ void Item_Text_Paint(itemDef_t *item)
 
 	if (item->text2)	// Is there a second line of text?
 	{
+#ifdef _XBOX
+		// Xbox 360 have ptr mapped after 0x7FFF.FFFF
+		if ((int)item->text2 > 0xFFFF0000)
+#else
 		if ((int)item->text2 < 0)
+#endif
 		{
 			textPtr = SP_GetStringText(-(int)item->text2);
 		}

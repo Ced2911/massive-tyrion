@@ -2751,7 +2751,7 @@ qboolean R_LoadMDXA( model_t *mod, void *buffer, const char *mod_name, qboolean 
 	{
 		return qtrue;	// All done, stop here, do not LittleLong() etc. Do not pass go...
 	}
-
+#if 0 /// Crash !!!!
 #ifndef _M_IX86
 
 	//
@@ -2792,6 +2792,7 @@ qboolean R_LoadMDXA( model_t *mod, void *buffer, const char *mod_name, qboolean 
 			((short *)cframe->bones)[j] = LittleShort( ((short *)cframe->bones)[j] );
 		}
 	}
+#endif
 #endif
 #endif
 	return qtrue;

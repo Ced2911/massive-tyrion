@@ -1,5 +1,5 @@
 LIBRARY      DLLModule
 EXPORTS
-	GetGameAPI
-	vmMain
-	dllEntry
+	GetGameAPI	@1
+	vmMain		@2
+	dllEntry	@3

@@ -373,6 +373,20 @@ The cgame module is making a system call
 ====================
 */
 void *VM_ArgPtr( int intValue );
+#if 0 // Todo ...
+void *VM_ArgPtr( intptr_t intValue ) {
+	if ( !intValue ) {
+		return NULL;
+	}
+
+	if ( cgvm.entryPoint ) {
+		return (void *)(cgvm + intValue);
+	}
+	else {
+		return (void *)(currentVM->dataBase + (intValue & currentVM->dataMask));
+	}
+}
+#endif
 void CM_SnapPVS(vec3_t origin,byte *buffer);
 //#define	VMA(x) VM_ArgPtr(args[x])
 #define	VMA(x) ((void*)args[x])

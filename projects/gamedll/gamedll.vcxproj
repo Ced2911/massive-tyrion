@@ -350,6 +350,7 @@
       <CallAttributedProfiling>Callcap</CallAttributedProfiling>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>..\ICARUS;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <StructMemberAlignment>8Bytes</StructMemberAlignment>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -358,6 +359,7 @@
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <NoEntryPoint>false</NoEntryPoint>
       <AdditionalOptions>/dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
+      <AutomaticModuleDefinitionFile>.\gamedll.def</AutomaticModuleDefinitionFile>
     </Link>
     <Deploy>
       <DeploymentType>CopyToHardDrive</DeploymentType>
@@ -366,6 +368,9 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
     <ImageXex />
+    <ImageXex>
+      <ExportByName>true</ExportByName>
+    </ImageXex>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'">
     <ClCompile>

@@ -77,7 +77,7 @@ void GlShaderManager::ApplyShader() {
 			}
 		}
 
-		OutputDebugStringA( code );
+		//OutputDebugStringA( code );
 
 		// Create pixel shader.
 		GLImpl.device->CreatePixelShader( (DWORD*)pPixelShaderCode->GetBufferPointer(), 
@@ -114,7 +114,7 @@ void GlShaderManager::ApplyShader() {
 			}
 		}
 
-		OutputDebugStringA( code );
+		//OutputDebugStringA( code );
 
 		// Create pixel shader.
 		GLImpl.device->CreateVertexShader( 

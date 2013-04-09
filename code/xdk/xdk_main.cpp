@@ -383,8 +383,9 @@ void *Sys_GetGameAPI (void *parms)
 	_getcwd (cwd, sizeof(cwd));
 	Com_sprintf (name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
 #else
-	_getcwd (cwd, sizeof(cwd));
-	Com_sprintf (name, sizeof(name), "%s/%s/%s", "game:", debugdir, gamename);
+	//_getcwd (cwd, sizeof(cwd));
+	strcpy(cwd, "game:");
+	Com_sprintf (name, sizeof(name), "%s\\%s\\%s", "game:", debugdir, gamename);
 #endif
 	game_library = LoadLibrary ( name );
 	if (game_library)
@@ -393,8 +394,13 @@ void *Sys_GetGameAPI (void *parms)
 	}
 	else
 	{
+#ifdef _XBOX
+		// check the current directory for other development purposes
+		Com_sprintf (name, sizeof(name), "%s\\%s", cwd, gamename);
+#else
 		// check the current directory for other development purposes
 		Com_sprintf (name, sizeof(name), "%s/%s", cwd, gamename);
+#endif
 		game_library = LoadLibrary ( name );
 		if (game_library)
 		{
@@ -407,8 +413,8 @@ void *Sys_GetGameAPI (void *parms)
 			Com_Error( ERR_FATAL, "Couldn't load game" );
 		}
 	}
-
 	GetGameAPI = (void *(*)(void *))GetProcAddress (game_library, "GetGameAPI");
+
 	if (!GetGameAPI)
 	{
 		Sys_UnloadGame ();		
@@ -431,6 +437,7 @@ void * Sys_LoadCgame( int (**entryPoint)(int, ...), int (*systemcalls)(int, ...)
 
 	dllEntry = ( void (*)( int (*)( int, ... ) ) )GetProcAddress( game_library, "dllEntry" ); 
 	*entryPoint = (int (*)(int,...))GetProcAddress( game_library, "vmMain" );
+
 	if ( !*entryPoint || !dllEntry ) {
 		FreeLibrary( game_library );
 		return NULL;
@@ -944,7 +951,7 @@ WinMain
 int main() {
 	char		cwd[MAX_OSPATH];
 
-	Q_strncpyz( sys_cmdline, "", sizeof( sys_cmdline ) );
+	Q_strncpyz( sys_cmdline, "+set map kejim_base", sizeof( sys_cmdline ) );
 
 	// done before Com/Sys_Init since we need this for error output
 	Sys_CreateConsole();
@@ -972,6 +979,9 @@ int main() {
 	if ( !com_viewlog->integer ) {
 		Sys_ShowConsole( 0, qfalse );
 	}
+
+	// Force map execution !!!
+	Cbuf_ExecuteText(EXEC_APPEND,"devmap kejim_post");
 
     // main game loop
 	while( 1 ) {

@@ -211,11 +211,17 @@ void CGLImpl::EndTiling() {
 	state.dirty = 0xFFFFFFFF;
 }
 
+static int need_end_tiling = 0;
+
 extern "C" void XDKQ3BeginFrame() {
 	if (GLImpl.use_aa == 0) {
 		return;
 	}
+	if (need_end_tiling) {
+		XDKGlDisplay();
+	}
 	GLImpl.BeginTiling();
+	need_end_tiling = 1;
 }
 
 //-------------------------------------------------------------------------------------
@@ -234,6 +240,8 @@ void XDKGlDisplay() {
 	} else {
 		GLImpl.Swap();
 	}
+
+	need_end_tiling = 0;
 }
 
 //-------------------------------------------------------------------------------------

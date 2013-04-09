@@ -754,6 +754,12 @@ void *Z_Malloc(int iSize, memtag_t eTag, qboolean bZeroit)
 		#endif
 
 		pMemory = (zoneHeader_t *) malloc ( iRealSize );
+#ifdef _XBOX
+		// memset
+		if (pMemory) {
+			memset(pMemory, 0, iRealSize);
+		}
+#endif
 		if (!pMemory)
 		{
 			// new bit, if we fail to malloc memory, try dumping some of the cached stuff that's non-vital and try again...
