@@ -2515,6 +2515,13 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 		LL(mdxm->ofsEnd);
 		
 	}
+
+	// Swap mdxmHierarchyOffsets_t
+	mdxmHierarchyOffsets_t * mdxmHierarchyOffsets = (mdxmHierarchyOffsets_t *)( (byte *)mdxm + sizeof(mdxmHeader_t));
+ 	for ( i = 0 ; i < mdxm->numSurfaces ; i++) 
+	{
+		LL(mdxmHierarchyOffsets->offsets[i]);
+	}
 		
 	// first up, go load in the animation file we need that has the skeletal animation info for this model
 	mdxm->animIndex = RE_RegisterModel(va ("%s.gla",mdxm->animName));
@@ -2534,8 +2541,10 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 	surfInfo = (mdxmSurfHierarchy_t *)( (byte *)mdxm + mdxm->ofsSurfHierarchy);
  	for ( i = 0 ; i < mdxm->numSurfaces ; i++) 
 	{
-		LL(surfInfo->numChildren);
+		LL(surfInfo->flags);
+		LL(surfInfo->shaderIndex);
 		LL(surfInfo->parentIndex);
+		LL(surfInfo->numChildren);
 
 		// do all the children indexs
 		for (j=0; j<surfInfo->numChildren; j++)
@@ -2564,8 +2573,10 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 #if _DEBUG
 	ri.Printf(0, "For Ghoul2 mesh file %s\n", mod_name);
 #endif
+	
 	// swap all the LOD's	(we need to do the middle part of this even for intel, because of shader reg and err-check)
 	lod = (mdxmLOD_t *) ( (byte *)mdxm + mdxm->ofsLODs );
+	
 	for ( l = 0 ; l < mdxm->numLODs ; l++)
 	{
 		int	triCount = 0;
@@ -2573,16 +2584,28 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 		LL(lod->ofsEnd);
 		// swap all the surfaces
 		surf = (mdxmSurface_t *) ( (byte *)lod + sizeof (mdxmLOD_t) + (mdxm->numSurfaces * sizeof(mdxmLODSurfOffset_t)) );
+
+		// Swap mdxmLODSurfOffset_t
+		mdxmLODSurfOffset_t * mdxmLODSurfOffsets = (mdxmLODSurfOffset_t *) ( (byte *)lod + sizeof (mdxmLOD_t) );
+		for ( l = 0 ; l < mdxm->numSurfaces ; l++)
+		{
+			LL(mdxmLODSurfOffsets->offsets[l]);
+		}
+
 		for ( i = 0 ; i < mdxm->numSurfaces ; i++) 
 		{
-			LL(surf->numTriangles);
-			LL(surf->ofsTriangles);
+			LL(surf->ident);
+			LL(surf->thisSurfaceIndex);
+			LL(surf->ofsHeader);
 			LL(surf->numVerts);
 			LL(surf->ofsVerts);
-			LL(surf->ofsEnd);
-			LL(surf->ofsHeader);
+
+			LL(surf->numTriangles);
+			LL(surf->ofsTriangles);
+
 			LL(surf->numBoneReferences);
 			LL(surf->ofsBoneReferences);
+			LL(surf->ofsEnd);
 //			LL(surf->maxVertBoneWeights);
 
 			triCount += surf->numTriangles;
