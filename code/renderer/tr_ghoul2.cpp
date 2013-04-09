@@ -2506,11 +2506,14 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 
 		LL(mdxm->ident);
 		LL(mdxm->version);
+		LL(mdxm->animIndex);
+		LL(mdxm->numBones);
 		LL(mdxm->numLODs);
 		LL(mdxm->ofsLODs);
 		LL(mdxm->numSurfaces);
 		LL(mdxm->ofsSurfHierarchy);
 		LL(mdxm->ofsEnd);
+		
 	}
 		
 	// first up, go load in the animation file we need that has the skeletal animation info for this model
@@ -2736,9 +2739,12 @@ qboolean R_LoadMDXA( model_t *mod, void *buffer, const char *mod_name, qboolean 
 
 		LL(mdxa->ident);
 		LL(mdxa->version);
+		LL(mdxa->fScale);
 		LL(mdxa->numFrames);
-		LL(mdxa->numBones);
 		LL(mdxa->ofsFrames);
+		LL(mdxa->numBones);
+		LL(mdxa->ofsCompBonePool);
+		LL(mdxa->ofsSkel);
 		LL(mdxa->ofsEnd);
 	}
 
@@ -2751,26 +2757,43 @@ qboolean R_LoadMDXA( model_t *mod, void *buffer, const char *mod_name, qboolean 
 	{
 		return qtrue;	// All done, stop here, do not LittleLong() etc. Do not pass go...
 	}
-#if 0 /// Crash !!!!
+#if 1 /// Crash !!!!
 #ifndef _M_IX86
 
 	//
 	// optimisation, we don't bother doing this for standard intel case since our data's already in that format...
 	//
+	mdxaSkelOffsets_t	*skel_offsets;
 
-	// swap all the skeletal info
-	boneInfo = (mdxaSkel_t *)( (byte *)mdxa + mdxa->ofsSkel);
-	for ( i = 0 ; i < mdxa->numBones ; i++) 
-	{
+	// Swap mdxaSkelOffsets_t
+	skel_offsets = (mdxaSkelOffsets_t *)((byte *)mod->mdxa + sizeof(mdxaHeader_t));
+
+	for (int x=0; x< mod->mdxa->numBones; x++)
+ 	{
+ 		LL(skel_offsets->offsets[x]);
+	}
+
+	// Swap mdxaSkel_t
+	for (int x=0; x< mod->mdxa->numBones; x++)
+ 	{
+ 		boneInfo = (mdxaSkel_t *)((byte *)mod->mdxa + sizeof(mdxaHeader_t) + skel_offsets->offsets[x]);
+
+		LL(boneInfo->flags);
 		LL(boneInfo->numChildren);
 		LL(boneInfo->parent);
+
+		// swap structs
+		for (int l = 0; l<3; l++) {
+			for (int m = 0; m<4; m++) {				
+				LL(boneInfo->BasePoseMat.matrix[l][m]);
+				LL(boneInfo->BasePoseMatInv.matrix[l][m]);
+			}
+		}
+
 		for (k=0; k<boneInfo->numChildren; k++)
 		{
 			LL(boneInfo->children[k]);
 		}
-
-		// get next bone
-		boneInfo += (int)( &((mdxaSkel_t *)0)->children[ boneInfo->numChildren ] );
 	}
 
 #if 0
