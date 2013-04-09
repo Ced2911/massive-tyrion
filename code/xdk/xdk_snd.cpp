@@ -32,14 +32,6 @@ qboolean SNDDMA_Init(void) {
 
 	memset ((void *)&dma, 0, sizeof (dma));
 
-	Com_DPrintf("Completed successfully\n" );
-
-    return qtrue;
-}
-
-
-static int SNDDMA_InitDS ()
-{
 	// create the secondary buffer we'll actually work with
 	dma.channels = 2;
 	dma.samplebits = 16;
@@ -55,7 +47,16 @@ static int SNDDMA_InitDS ()
 	if (dma.buffer)
 		memset(dma.buffer, 0, dma.samples * dma.samplebits/8);
 	SNDDMA_Submit ();
-	return 1;
+
+	// Hack !!
+	dma.samples = 32768;
+	dma.submission_chunk = 1;
+
+	dma.buffer = new byte[dma.samples * 2];
+
+	Com_DPrintf("Completed successfully\n" );
+
+    return qtrue;
 }
 /*
 ==============
@@ -67,7 +68,7 @@ how many sample are required to fill it up.
 ===============
 */
 int SNDDMA_GetDMAPos( void ) {
-	return 0;
+	return 0x2000;
 }
 
 /*
@@ -115,6 +116,10 @@ void SNDDMA_Activate( qboolean bAppActive )
 //
 unsigned int SNDDMA_GetDSHandle(void)
 {
+#ifdef _DEBUG
+	// Uch !!!
+	DebugBreak();
+#endif
 	return NULL;
 }
 
