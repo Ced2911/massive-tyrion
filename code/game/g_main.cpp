@@ -1038,7 +1038,7 @@ void G_Animate ( gentity_t *self )
 		self->s.frame = self->endFrame;
 		
 		gi.G2API_SetBoneAnimIndex( &self->ghoul2[self->playerModel], self->rootBone, 
-									self->startFrame, self->endFrame, BONE_ANIM_OVERRIDE_FREEZE, 1.0f, cg.time, 0, 0  );
+									self->startFrame, self->endFrame, BONE_ANIM_OVERRIDE_FREEZE, 1.0f, cg.time, -1, -1  );
 		return;
 	}
 

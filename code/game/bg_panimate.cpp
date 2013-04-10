@@ -2394,12 +2394,12 @@ void PM_SetAnimFinal(int *torsoAnim,int *legsAnim,
 #endif
 							gi.G2API_SetBoneAnimIndex(&gent->ghoul2[gent->playerModel], gent->lowerLumbarBone, //gent->upperLumbarBone
 								firstFrame, lastFrame, animFlags&~BONE_ANIM_BLEND, 
-								animSpeed, cg.time, 0, 0 );
+								animSpeed, cg.time, -1, -1 );
 							if ( gent->motionBone != -1 )
 							{
 								gi.G2API_SetBoneAnimIndex(&gent->ghoul2[gent->playerModel], gent->motionBone,
 									firstFrame, lastFrame, animFlags&~BONE_ANIM_BLEND, 
-									animSpeed, cg.time, 0, 0 );
+									animSpeed, cg.time, -1, -1 );
 							}
 						}
 					}

@@ -1221,7 +1221,7 @@ void pas_think( gentity_t *ent )
 	{
 		// let us do our animation, then we are good to go in terms of pounding the crap out of enemies.
 		ent->damage = 1;
-		gi.G2API_SetBoneAnimIndex( &ent->ghoul2[ent->playerModel], ent->rootBone, 0, 11, BONE_ANIM_OVERRIDE_FREEZE, 0.8f, cg.time, 0, 0  );
+		gi.G2API_SetBoneAnimIndex( &ent->ghoul2[ent->playerModel], ent->rootBone, 0, 11, BONE_ANIM_OVERRIDE_FREEZE, 0.8f, cg.time, -1, -1  );
 		ent->nextthink = level.time + 1200;
 		return;
 	}
@@ -1564,7 +1564,7 @@ void ion_cannon_think( gentity_t *self )
 		G_UseTargets2( self, self, self->target2 );
 	}
 
-	gi.G2API_SetBoneAnimIndex( &self->ghoul2[self->playerModel], self->rootBone, 0, 8, BONE_ANIM_OVERRIDE_FREEZE, 0.6f, cg.time, 0, 0  );
+	gi.G2API_SetBoneAnimIndex( &self->ghoul2[self->playerModel], self->rootBone, 0, 8, BONE_ANIM_OVERRIDE_FREEZE, 0.6f, cg.time, -1, -1  );
 	self->nextthink = level.time + self->wait + crandom() * self->random;
 }
 

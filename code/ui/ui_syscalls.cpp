@@ -89,7 +89,9 @@ sfxHandle_t	trap_S_RegisterSound( const char *sample, qboolean compressed )
 
 void trap_FF_Start( ffHandle_t ff )
 {
+#ifndef _XBOX
 	FF_AddForce( ff );
+#endif
 }
 
 ffHandle_t trap_FF_Register( const char *name, int channel )

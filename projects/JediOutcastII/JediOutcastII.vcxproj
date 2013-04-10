@@ -251,6 +251,7 @@
     <None Include="..\..\code\ui\ui.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\code\ff\ff.h" />
     <ClInclude Include="..\..\code\ghoul2\g2.h" />
     <ClInclude Include="..\..\code\jpeg-6\jchuff.h" />
     <ClInclude Include="..\..\code\jpeg-6\jconfig.h" />
@@ -404,9 +405,9 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PreprocessorDefinitions>_DEBUG;_XBOX;__POWERPC__;_JK2EXE;NO_GETENV</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_XBOX;__POWERPC__;_JK2EXE;NO_GETENV;_IMMERSION</PreprocessorDefinitions>
       <CallAttributedProfiling>Callcap</CallAttributedProfiling>
-      <AdditionalIncludeDirectories>..\xenon;..\..\code\renderer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\xenon;..\..\code\renderer;..\..\code\ff\ifc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <StructMemberAlignment>8Bytes</StructMemberAlignment>
     </ClCompile>

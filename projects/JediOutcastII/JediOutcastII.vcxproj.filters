@@ -807,5 +807,8 @@
     <ClInclude Include="..\xenon\GL\glut.h">
       <Filter>xenon_gl\Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\code\ff\ff.h">
+      <Filter>FF</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

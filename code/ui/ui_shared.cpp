@@ -2124,11 +2124,13 @@ Script_FFPlay
 */
 qboolean Script_FFPlay(itemDef_t *item, const char **args) 
 {
+#ifndef _XBOX
 	const char *val;
 	if (String_Parse(args, &val)) 
 	{
 		DC->startForce(DC->registerForce(val));
 	}
+#endif
 	return qtrue;
 }
 #endif // _IMMERSION
@@ -2321,7 +2323,7 @@ ItemParse_focusForce
 qboolean ItemParse_focusForce( itemDef_t *item) 
 {
 	const char *temp;
-
+#ifndef _XBOX
 	if (!PC_ParseStringMem((const char **)&temp)) 
 	{
 //#ifdef _DEBUG
@@ -2330,6 +2332,7 @@ qboolean ItemParse_focusForce( itemDef_t *item)
 		return qfalse;
 	}
 	item->focusForce = DC->registerForce(temp);
+#endif
 	return qtrue;
 }
 #endif // _IMMERSION

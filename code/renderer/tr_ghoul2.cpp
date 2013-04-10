@@ -486,7 +486,9 @@ static int G2_GetBonePoolIndex(	const mdxaHeader_t *pMDXAHeader, int iFrame, int
 
 	mdxaIndex_t *pIndex = (mdxaIndex_t *) ((byte*) pMDXAHeader + pMDXAHeader->ofsFrames + iOffsetToIndex);
 
-	return pIndex->iIndex & 0x00FFFFFF;	// this will cause problems for big-endian machines... ;-)
+	// return pIndex->iIndex & 0x00FFFFFF;	// this will cause problems for big-endian machines... ;-)
+	int ret = LittleLong(pIndex->iIndex) & 0x00FFFFFF;	// HACK !!
+	return ret;
 }
 
 
@@ -2435,6 +2437,208 @@ qboolean R_LoadAndPatchMDXM( model_t *mod, void *buffer, const char *mod_name, q
 
 #endif // _NPATCH
  
+
+void dumpMDXAInfo(mdxaHeader_t * mdxa, const char * mod_name) {
+#define MyPrintf Com_Printf
+#define VarPrintfU(v) MyPrintf("[mdxa %s]%10s - %08x\n",mod_name, #v, v);
+#define VarPrintfF(v) MyPrintf("[mdxa %s]%10s - %f\n",mod_name, #v, v);
+#define VarPrintfS(v) MyPrintf("[mdxa %s]%10s - %s\n",mod_name, #v, v);
+	MyPrintf("MDXA Dump for %s\n", mod_name);
+
+	/* header */
+	VarPrintfU(mdxa->ident);			// 	"IDP3" = MD3, "RDM5" = MDR, "2LGA"(GL2 Anim) = MDXA
+	VarPrintfU(mdxa->version);			// 1,2,3 etc as per format revision
+	//
+	VarPrintfS(mdxa->name);				// GLA name (eg "skeletons/marine")	// note: extension missing
+	VarPrintfF(mdxa->fScale);			// will be zero if build before this field was defined, else scale it was built with
+
+	// frames and bones are shared by all levels of detail
+	//
+	VarPrintfU(mdxa->numFrames);
+	VarPrintfU(mdxa->ofsFrames);		// points at mdxaFrame_t array
+	VarPrintfU(mdxa->numBones);			// (no offset to these since they're inside the frames array)
+	VarPrintfU(mdxa->ofsCompBonePool);	// offset to global compressed-bone pool that all frames use
+	VarPrintfU(mdxa->ofsSkel);			// offset to mdxaSkel_t info	
+	VarPrintfU(mdxa->ofsEnd);			// EOF, which of course gives overall file size
+
+	mdxaSkelOffsets_t	*skel_offsets;
+
+	// Swap mdxaSkelOffsets_t
+	skel_offsets = (mdxaSkelOffsets_t *)((byte *)mdxa + sizeof(mdxaHeader_t));
+
+	for (int x=0; x< mdxa->numBones; x++)
+ 	{
+ 		VarPrintfU(skel_offsets->offsets[x]);
+	}
+
+	for (int x=0; x< mdxa->numBones; x++)
+ 	{
+ 		mdxaSkel_t * boneInfo = (mdxaSkel_t *)((byte *)mdxa + sizeof(mdxaHeader_t) + skel_offsets->offsets[x]);
+
+		VarPrintfU(boneInfo->flags);
+		VarPrintfU(boneInfo->numChildren);
+		VarPrintfU(boneInfo->parent);
+
+		// swap structs
+		for (int l = 0; l<3; l++) {
+			for (int m = 0; m<4; m++) {				
+				VarPrintfF(boneInfo->BasePoseMat.matrix[l][m]);
+				VarPrintfF(boneInfo->BasePoseMatInv.matrix[l][m]);
+			}
+		}
+
+		for (int k=0; k<boneInfo->numChildren; k++)
+		{
+			VarPrintfU(boneInfo->children[k]);
+		}
+	}
+
+	for (int i = 0; i < mdxa->numFrames ;i++) {
+		for (int j = 0; j < mdxa->numBones; j++) {
+			// it's a 24bit value, 32bit aligned => does it really work ?
+			// mdxaIndex_t * index = (mdxaIndex_t *)((byte *)mod->mdxa + sizeof(mdxaHeader_t) + mod->mdxa->ofsFrames + (i * mod->mdxa->numBones * 3) + (j * 3));
+			int index_offset = (i * mdxa->numBones * 3) + (j * 3);
+			mdxaIndex_t * index = (mdxaIndex_t *)((byte *)mdxa + mdxa->ofsFrames + index_offset);
+			//VarPrintfU(index->iIndex);
+		}
+	}
+
+	int numCompBones = numCompBones = mdxa->ofsEnd - mdxa->ofsCompBonePool;
+	numCompBones /= sizeof(unsigned short); // numCompBones must be < 7
+	// mdxaCompQuatBone_t * bone = (mdxaCompQuatBone_t*)((byte *)mod->mdxa + sizeof(mdxaHeader_t) + mod->mdxa->ofsCompBonePool);
+	unsigned short * bone = (unsigned short *)((byte *)mdxa + mdxa->ofsCompBonePool);
+
+	for( int i = 0; i < numCompBones; i++ )
+	{
+		// Does it really need some swapping ?
+		//VarPrintfU(bone[i]);
+	}
+
+#undef MyPrintf
+#undef VarPrintfU
+#undef VarPrintfF
+#undef VarPrintfS
+}
+void dumpMDXMInfo(mdxmHeader_t * mdxm, const char * mod_name) {
+#define MyPrintf Com_Printf
+#define VarPrintfU(v) MyPrintf("[mdxm %s]%10s - %08x\n",mod_name, #v, v);
+#define VarPrintfF(v) MyPrintf("[mdxm %s]%10s - %f\n",mod_name, #v, v);
+#define VarPrintfS(v) MyPrintf("[mdxm %s]%10s - %s\n",mod_name, #v, v);
+	MyPrintf("MDXM Dump for %s\n", mod_name);
+
+	VarPrintfU(mdxm->ident);				// "IDP3" = MD3, "RDM5" = MDR, "2LGM"(GL2 Mesh) = MDX   (cruddy char order I know, but I'm following what was there in other versions)
+	VarPrintfU(mdxm->version);			// 1,2,3 etc as per format revision
+	VarPrintfS(mdxm->name);	// model name (eg "models/players/marine.glm")	// note: extension supplied
+	VarPrintfS(mdxm->animName);// name of animation file this mesh requires	// note: extension missing
+	VarPrintfU(mdxm->animIndex);			// filled in by game (carcass defaults it to 0)
+	VarPrintfU(mdxm->numBones);			// (for ingame version-checks only, ensure we don't ref more bones than skel file has)
+	VarPrintfU(mdxm->numLODs);	
+	VarPrintfU(mdxm->ofsLODs);
+	VarPrintfU(mdxm->numSurfaces);		// now that surfaces are drawn hierarchically, we have same # per LOD
+	VarPrintfU(mdxm->ofsSurfHierarchy);
+	VarPrintfU(mdxm->ofsEnd);				// EOF, which of course gives overall file size
+
+	mdxmSurfHierarchy_t * surfInfo = (mdxmSurfHierarchy_t *)( (byte *)mdxm + mdxm->ofsSurfHierarchy);
+ 	for ( int i = 0 ; i < mdxm->numSurfaces ; i++) 
+	{
+		VarPrintfU(surfInfo->flags);
+		VarPrintfU(surfInfo->shaderIndex);
+		VarPrintfU(surfInfo->parentIndex);
+		VarPrintfU(surfInfo->numChildren);
+
+		// do all the children indexs
+		for (int j=0; j<surfInfo->numChildren; j++)
+		{
+			VarPrintfU(surfInfo->childIndexes[j]);
+		}
+
+		// find the next surface
+		surfInfo = (mdxmSurfHierarchy_t *)( (byte *)surfInfo + (int)( &((mdxmSurfHierarchy_t *)0)->childIndexes[ surfInfo->numChildren ] ));
+  	}
+
+	mdxmLOD_t * lod = (mdxmLOD_t *) ( (byte *)mdxm + mdxm->ofsLODs );
+	
+	for ( int l = 0 ; l < mdxm->numLODs ; l++)
+	{
+		int	triCount = 0;
+
+		VarPrintfU(lod->ofsEnd);
+		// swap all the surfaces
+		mdxmSurface_t * surf = (mdxmSurface_t *) ( (byte *)lod + sizeof (mdxmLOD_t) + (mdxm->numSurfaces * sizeof(mdxmLODSurfOffset_t)) );
+
+		// Swap mdxmLODSurfOffset_t
+		mdxmLODSurfOffset_t * mdxmLODSurfOffsets = (mdxmLODSurfOffset_t *) ( (byte *)lod + sizeof (mdxmLOD_t) );
+		for ( l = 0 ; l < mdxm->numSurfaces ; l++)
+		{
+			VarPrintfU(mdxmLODSurfOffsets->offsets[l]);
+		}
+
+		for ( int i = 0 ; i < mdxm->numSurfaces ; i++) 
+		{
+			VarPrintfU(surf->ident);
+			VarPrintfU(surf->thisSurfaceIndex);
+			VarPrintfU(surf->ofsHeader);
+			VarPrintfU(surf->numVerts);
+			VarPrintfU(surf->ofsVerts);
+
+			VarPrintfU(surf->numTriangles);
+			VarPrintfU(surf->ofsTriangles);
+
+			VarPrintfU(surf->numBoneReferences);
+			VarPrintfU(surf->ofsBoneReferences);
+			VarPrintfU(surf->ofsEnd);
+//			LL(surf->maxVertBoneWeights);
+
+			triCount += surf->numTriangles;
+
+			// FIXME - is this correct? 
+			// do all the bone reference data
+			int * boneRef = (int *) ( (byte *)surf + surf->ofsBoneReferences );
+			for ( int j = 0 ; j < surf->numBoneReferences ; j++ ) 
+			{
+					VarPrintfU(boneRef[j]);
+			}
+
+			
+			// swap all the triangles
+			mdxmTriangle_t * tri = (mdxmTriangle_t *) ( (byte *)surf + surf->ofsTriangles );
+			for ( int j = 0 ; j < surf->numTriangles ; j++, tri++ ) 
+			{
+				//VarPrintfU(tri->indexes[0]);
+				//VarPrintfU(tri->indexes[1]);
+				//VarPrintfU(tri->indexes[2]);
+			}
+
+			// swap all the vertexes
+			mdxmVertex_t * v = (mdxmVertex_t *) ( (byte *)surf + surf->ofsVerts );
+			for ( int j = 0 ; j < surf->numVerts ; j++ ) 
+			{
+				/*
+				// Try - not tested
+				VarPrintfF( v->normal[0] );
+				VarPrintfF( v->normal[1] );
+				VarPrintfF( v->normal[2] );
+
+				VarPrintfF( v->vertCoords[0] );
+				VarPrintfF( v->vertCoords[1] );
+				VarPrintfF( v->vertCoords[2] );
+
+				VarPrintfU(v->uiNmWeightsAndBoneIndexes);
+				*/
+			}
+			// find the next surface
+			surf = (mdxmSurface_t *)( (byte *)surf + surf->ofsEnd );
+		}
+		// find the next LOD
+		lod = (mdxmLOD_t *)( (byte *)lod + lod->ofsEnd );
+	}
+
+#undef MyPrintf
+#undef VarPrintfU
+#undef VarPrintfF
+#undef VarPrintfS
+}
+
 /*
 =================
 R_LoadMDXM - load a Ghoul 2 Mesh file
@@ -2687,9 +2891,10 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 //		tag++;
 //	}
 //#endif
-
+	//dumpMDXMInfo(mod->mdxm, mod_name);
 	return qtrue;
 }
+
 
 /*
 =================
@@ -2801,12 +3006,16 @@ qboolean R_LoadMDXA( model_t *mod, void *buffer, const char *mod_name, qboolean 
 	}
 
 	// Swap index // TODO !!
+	unsigned long * t;
 	for ( i = 0; i < mod->mdxa->numFrames ;i++) {
 		for ( j = 0; j < mod->mdxa->numBones; j++) {
 			// it's a 24bit value, 32bit aligned => does it really work ?
 			// mdxaIndex_t * index = (mdxaIndex_t *)((byte *)mod->mdxa + sizeof(mdxaHeader_t) + mod->mdxa->ofsFrames + (i * mod->mdxa->numBones * 3) + (j * 3));
-			mdxaIndex_t * index = (mdxaIndex_t *)((byte *)mod->mdxa + mod->mdxa->ofsFrames + (i * mod->mdxa->numBones * 3) + (j * 3));
-			LL(index->iIndex);
+			int index_offset = (i * mod->mdxa->numBones * 3) + (j * 3);
+			mdxaIndex_t * index = (mdxaIndex_t *)((byte *)mod->mdxa + mod->mdxa->ofsFrames + index_offset);
+			//LL(index->iIndex);
+			t =(unsigned long*)&index->iIndex;
+			//index->iIndex = LittleLong(index->iIndex) & 0x00FFFFFF | index->iIndex & 0xFF000000;
 		}
 	}
 
@@ -2848,6 +3057,7 @@ qboolean R_LoadMDXA( model_t *mod, void *buffer, const char *mod_name, qboolean 
 #endif
 #endif
 #endif
+	//dumpMDXAInfo(mod->mdxa, mod_name);
 	return qtrue;
 }
 

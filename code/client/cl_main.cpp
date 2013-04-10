@@ -460,7 +460,7 @@ CL_FF_Restart_f
 =================
 */
 void CL_FF_Restart_f( void ) {
-
+#ifndef _XBOX
 	if ( FF_IsInitialized() )
 	{
 		// Apply cvar changes w/o losing registered effects
@@ -468,7 +468,10 @@ void CL_FF_Restart_f( void ) {
 		if ( !FF_Init() )
 			FF_Shutdown();	// error (shouldn't happen)
 	}
-	else if ( cls.state >= CA_PRIMED )	// maybe > CA_DISCONNECTED
+
+	else
+#endif 
+	if ( cls.state >= CA_PRIMED )	// maybe > CA_DISCONNECTED
 	{
 		// Restart map or menu
 		CL_Vid_Restart_f();
@@ -919,7 +922,9 @@ void CL_Frame ( int msec,float fractionMsec ) {
 	S_Update();
 
 #ifdef _IMMERSION
+#ifndef _XBOX
 	FF_Update();
+#endif
 #endif // _IMMERSION
 	// advance local effects for next frame
 	SCR_RunCinematic();

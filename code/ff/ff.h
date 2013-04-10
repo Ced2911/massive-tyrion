@@ -3,7 +3,7 @@
 
 #include "../ff/ff_public.h"
 
-#ifdef _FF
+#ifdef __FF_H
 
 //
 //	Externally visible functions
