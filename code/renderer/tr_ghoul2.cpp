@@ -20,7 +20,9 @@
 	#include "../ghoul2/G2.h"
 #endif
 
-#define	LL(x) x=LittleLong(x)
+#define	LL(x)	x=LittleLong(x)
+#define LF(x)	x=LittleFloat(x)
+#define LS(x)	x=LittleShort(x)
 
 extern	cvar_t	*r_Ghoul2UnSqash;
 extern	cvar_t	*r_Ghoul2AnimSmooth;
@@ -2514,13 +2516,13 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 		LL(mdxm->ofsSurfHierarchy);
 		LL(mdxm->ofsEnd);
 		
-	}
 
-	// Swap mdxmHierarchyOffsets_t
-	mdxmHierarchyOffsets_t * mdxmHierarchyOffsets = (mdxmHierarchyOffsets_t *)( (byte *)mdxm + sizeof(mdxmHeader_t));
- 	for ( i = 0 ; i < mdxm->numSurfaces ; i++) 
-	{
-		LL(mdxmHierarchyOffsets->offsets[i]);
+		// Swap mdxmHierarchyOffsets_t
+		mdxmHierarchyOffsets_t * mdxmHierarchyOffsets = (mdxmHierarchyOffsets_t *)( (byte *)mdxm + sizeof(mdxmHeader_t));
+ 		for ( i = 0 ; i < mdxm->numSurfaces ; i++) 
+		{
+			LL(mdxmHierarchyOffsets->offsets[i]);
+		}
 	}
 		
 	// first up, go load in the animation file we need that has the skeletal animation info for this model
@@ -2649,27 +2651,7 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 			v = (mdxmVertex_t *) ( (byte *)surf + surf->ofsVerts );
 			for ( j = 0 ; j < surf->numVerts ; j++ ) 
 			{
-#if 0
-				v->normal[0] = LittleFloat( v->normal[0] );
-				v->normal[1] = LittleFloat( v->normal[1] );
-				v->normal[2] = LittleFloat( v->normal[2] );
-
-				v->texCoords[0] = LittleFloat( v->texCoords[0] );
-				v->texCoords[1] = LittleFloat( v->texCoords[1] );
-
-				v->numWeights = LittleLong( v->numWeights );
-  			    v->offset[0] = LittleFloat( v->offset[0] );
-				v->offset[1] = LittleFloat( v->offset[1] );
-				v->offset[2] = LittleFloat( v->offset[2] );
-
-				for ( k = 0 ; k < /*v->numWeights*/surf->maxVertBoneWeights ; k++ ) 
-				{
-					v->weights[k].boneIndex = LittleLong( v->weights[k].boneIndex );
-					v->weights[k].boneWeight = LittleFloat( v->weights[k].boneWeight );
-				}
-				v = (mdxmVertex_t *)&v->weights[/*v->numWeights*/surf->maxVertBoneWeights];
-#else
-				// Try
+				// Try - not tested
 				v->normal[0] = LittleFloat( v->normal[0] );
 				v->normal[1] = LittleFloat( v->normal[1] );
 				v->normal[2] = LittleFloat( v->normal[2] );
@@ -2679,7 +2661,6 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 				v->vertCoords[2] = LittleFloat( v->vertCoords[2] );
 
 				v->uiNmWeightsAndBoneIndexes = LittleLong( v->uiNmWeightsAndBoneIndexes );
-#endif
 			}
 #endif
 
@@ -2762,7 +2743,7 @@ qboolean R_LoadMDXA( model_t *mod, void *buffer, const char *mod_name, qboolean 
 
 		LL(mdxa->ident);
 		LL(mdxa->version);
-		LL(mdxa->fScale);
+		LF(mdxa->fScale);
 		LL(mdxa->numFrames);
 		LL(mdxa->ofsFrames);
 		LL(mdxa->numBones);
@@ -2808,8 +2789,8 @@ qboolean R_LoadMDXA( model_t *mod, void *buffer, const char *mod_name, qboolean 
 		// swap structs
 		for (int l = 0; l<3; l++) {
 			for (int m = 0; m<4; m++) {				
-				LL(boneInfo->BasePoseMat.matrix[l][m]);
-				LL(boneInfo->BasePoseMatInv.matrix[l][m]);
+				LF(boneInfo->BasePoseMat.matrix[l][m]);
+				LF(boneInfo->BasePoseMatInv.matrix[l][m]);
 			}
 		}
 
@@ -2818,6 +2799,32 @@ qboolean R_LoadMDXA( model_t *mod, void *buffer, const char *mod_name, qboolean 
 			LL(boneInfo->children[k]);
 		}
 	}
+
+	// Swap index // TODO !!
+	for ( i = 0; i < mod->mdxa->numFrames ;i++) {
+		for ( j = 0; j < mod->mdxa->numBones; j++) {
+			// it's a 24bit value, 32bit aligned => does it really work ?
+			// mdxaIndex_t * index = (mdxaIndex_t *)((byte *)mod->mdxa + sizeof(mdxaHeader_t) + mod->mdxa->ofsFrames + (i * mod->mdxa->numBones * 3) + (j * 3));
+			mdxaIndex_t * index = (mdxaIndex_t *)((byte *)mod->mdxa + mod->mdxa->ofsFrames + (i * mod->mdxa->numBones * 3) + (j * 3));
+			LL(index->iIndex);
+		}
+	}
+
+
+	// Swap compressed bones - see MC_UnCompressQuat -> look like that mdxaCompQuatBone_t is used as short and not a char
+	int numCompBones = numCompBones = mod->mdxa->ofsEnd - mod->mdxa->ofsCompBonePool;
+	numCompBones /= sizeof(unsigned short); // numCompBones must be < 7
+	// mdxaCompQuatBone_t * bone = (mdxaCompQuatBone_t*)((byte *)mod->mdxa + sizeof(mdxaHeader_t) + mod->mdxa->ofsCompBonePool);
+	unsigned short * bone = (unsigned short *)((byte *)mod->mdxa + mod->mdxa->ofsCompBonePool);
+
+	for( i = 0; i < numCompBones; i++ )
+	{
+		// Does it really need some swapping ?
+		LS(bone[i]);
+	}
+
+	// Swap frames ... (what is the format? is it really stored ?) // TODO !!
+
 
 #if 0
 
