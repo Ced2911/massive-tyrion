@@ -142,12 +142,11 @@ public:
 	{
 	   return &value;
 	}
-		
 	size_type max_size () const
 	{
-	   return MAP_NODE_SIZE;
+		//return MAP_NODE_SIZE;
+		return 0xfffffff;	//uh, take a guess
 	}
-	
 	// allocate but don't initialize num elements of type T
 	pointer allocate (size_type num, const void* = 0) 
 	{

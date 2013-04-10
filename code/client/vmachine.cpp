@@ -42,6 +42,8 @@ Dlls will call this directly
 ============
 */
 
+
+#define ARRAY_LEN(x)			(sizeof(x) / sizeof(*(x)))
 /*
 ==============================================================
 
@@ -51,9 +53,17 @@ VIRTUAL MACHINE
 */
 int	VM_Call( int callnum, ... )
 {
-	return cgvm.entryPoint( (&callnum)[0], (&callnum)[1], (&callnum)[2], (&callnum)[3],
-		(&callnum)[4], (&callnum)[5], (&callnum)[6], (&callnum)[7],
-		(&callnum)[8],  (&callnum)[9] );
+	int args[10];
+	va_list ap;
+	va_start(ap, callnum);
+	for (int i = 0; i < ARRAY_LEN(args); i++) {
+		args[i] = va_arg(ap, int);
+	}
+	va_end(ap);
+
+	return cgvm.entryPoint( callnum,  args[0],  args[1],  args[2], args[3],
+        args[4],  args[5],  args[6], args[7],
+        args[8],  args[9]);
 	
 }
 
@@ -67,8 +77,6 @@ we pass this to the cgame dll to call back into the client
 */
 extern int CL_CgameSystemCalls( int *args );
 extern int CL_UISystemCalls( int *args );
-
-#define ARRAY_LEN(x)			(sizeof(x) / sizeof(*(x)))
 
 int VM_DllSyscall( int arg, ... ) {
 #if !id386 || defined __clang__

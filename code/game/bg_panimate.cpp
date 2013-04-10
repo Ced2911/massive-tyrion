@@ -2616,7 +2616,7 @@ setAnimLegs:
 #endif
 						gi.G2API_SetBoneAnimIndex(&gent->ghoul2[gent->playerModel], gent->rootBone, 
 							firstFrame, lastFrame, animFlags&~BONE_ANIM_BLEND, 
-							animSpeed, cg.time, 0, 0 );
+							animSpeed, cg.time, -1.f, -1.f );
 					}
 				}
 			}

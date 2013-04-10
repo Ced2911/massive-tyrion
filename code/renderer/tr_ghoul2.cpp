@@ -2611,9 +2611,8 @@ void dumpMDXMInfo(mdxmHeader_t * mdxm, const char * mod_name) {
 
 			// swap all the vertexes
 			mdxmVertex_t * v = (mdxmVertex_t *) ( (byte *)surf + surf->ofsVerts );
-			for ( int j = 0 ; j < surf->numVerts ; j++ ) 
+			for ( int j = 0 ; j < surf->numVerts ; j++, v++ ) 
 			{
-				/*
 				// Try - not tested
 				VarPrintfF( v->normal[0] );
 				VarPrintfF( v->normal[1] );
@@ -2624,7 +2623,6 @@ void dumpMDXMInfo(mdxmHeader_t * mdxm, const char * mod_name) {
 				VarPrintfF( v->vertCoords[2] );
 
 				VarPrintfU(v->uiNmWeightsAndBoneIndexes);
-				*/
 			}
 			// find the next surface
 			surf = (mdxmSurface_t *)( (byte *)surf + surf->ofsEnd );
@@ -2853,7 +2851,7 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 
 			// swap all the vertexes
 			v = (mdxmVertex_t *) ( (byte *)surf + surf->ofsVerts );
-			for ( j = 0 ; j < surf->numVerts ; j++ ) 
+			for ( j = 0 ; j < surf->numVerts ; j++, v++ ) 
 			{
 				// Try - not tested
 				v->normal[0] = LittleFloat( v->normal[0] );

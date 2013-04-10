@@ -30,10 +30,14 @@ static hlist<pair<CPoint,int> >				pointToLeaf;
 void CM_CleanLeafCache(void)
 {
 	hlist<pair<CPoint,int> >::iterator l;
+#ifdef _XBOX
+	pointToLeaf.clear();
+#else
 	for(l=pointToLeaf.begin();l!=pointToLeaf.end();l++)
 	{
 		pointToLeaf.erase(l);
 	}
+#endif
 /*
 	for(l=pointToContents.begin();l!=pointToContents.end();l++)
 	{
