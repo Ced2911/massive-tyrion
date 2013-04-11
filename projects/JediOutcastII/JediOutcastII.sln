@@ -12,6 +12,7 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CodeAnalysis|Xbox 360 = CodeAnalysis|Xbox 360
 		Debug|Xbox 360 = Debug|Xbox 360
+		DebugOpt|Xbox 360 = DebugOpt|Xbox 360
 		Profile_FastCap|Xbox 360 = Profile_FastCap|Xbox 360
 		Profile|Xbox 360 = Profile|Xbox 360
 		Release_LTCG|Xbox 360 = Release_LTCG|Xbox 360
@@ -22,6 +23,9 @@ Global
 		{BD501B2F-20FB-4B63-AB16-A1D9B70E68F4}.CodeAnalysis|Xbox 360.Build.0 = CodeAnalysis|Xbox 360
 		{BD501B2F-20FB-4B63-AB16-A1D9B70E68F4}.Debug|Xbox 360.ActiveCfg = Debug|Xbox 360
 		{BD501B2F-20FB-4B63-AB16-A1D9B70E68F4}.Debug|Xbox 360.Build.0 = Debug|Xbox 360
+		{BD501B2F-20FB-4B63-AB16-A1D9B70E68F4}.DebugOpt|Xbox 360.ActiveCfg = DebugOpt|Xbox 360
+		{BD501B2F-20FB-4B63-AB16-A1D9B70E68F4}.DebugOpt|Xbox 360.Build.0 = DebugOpt|Xbox 360
+		{BD501B2F-20FB-4B63-AB16-A1D9B70E68F4}.DebugOpt|Xbox 360.Deploy.0 = DebugOpt|Xbox 360
 		{BD501B2F-20FB-4B63-AB16-A1D9B70E68F4}.Profile_FastCap|Xbox 360.ActiveCfg = Profile_FastCap|Xbox 360
 		{BD501B2F-20FB-4B63-AB16-A1D9B70E68F4}.Profile_FastCap|Xbox 360.Build.0 = Profile_FastCap|Xbox 360
 		{BD501B2F-20FB-4B63-AB16-A1D9B70E68F4}.Profile|Xbox 360.ActiveCfg = Profile|Xbox 360
@@ -34,6 +38,9 @@ Global
 		{2BBA66F2-6EC8-47B4-B75B-82445F46017E}.CodeAnalysis|Xbox 360.Build.0 = CodeAnalysis|Xbox 360
 		{2BBA66F2-6EC8-47B4-B75B-82445F46017E}.Debug|Xbox 360.ActiveCfg = Debug|Xbox 360
 		{2BBA66F2-6EC8-47B4-B75B-82445F46017E}.Debug|Xbox 360.Build.0 = Debug|Xbox 360
+		{2BBA66F2-6EC8-47B4-B75B-82445F46017E}.DebugOpt|Xbox 360.ActiveCfg = DebugOpt|Xbox 360
+		{2BBA66F2-6EC8-47B4-B75B-82445F46017E}.DebugOpt|Xbox 360.Build.0 = DebugOpt|Xbox 360
+		{2BBA66F2-6EC8-47B4-B75B-82445F46017E}.DebugOpt|Xbox 360.Deploy.0 = DebugOpt|Xbox 360
 		{2BBA66F2-6EC8-47B4-B75B-82445F46017E}.Profile_FastCap|Xbox 360.ActiveCfg = Profile_FastCap|Xbox 360
 		{2BBA66F2-6EC8-47B4-B75B-82445F46017E}.Profile_FastCap|Xbox 360.Build.0 = Profile_FastCap|Xbox 360
 		{2BBA66F2-6EC8-47B4-B75B-82445F46017E}.Profile|Xbox 360.ActiveCfg = Profile|Xbox 360

@@ -2,7 +2,7 @@
 
 // leave this at the top for PCH reasons...
 #include "common_headers.h"
-
+#include <xtl.h>
 //#include "q_shared.h"
 
 float Com_Clamp( float min, float max, float value ) {
@@ -99,29 +99,6 @@ static int		(*_LittleLong) (int l);
 static float	(*_BigFloat) (float l);
 static float	(*_LittleFloat) (float l);
 
-#ifdef _M_IX86
-//
-// optimised stuff for Intel, since most of our data is in that format anyway...
-//
-short	BigShort(short l){return _BigShort(l);}
-int		BigLong (int l) {return _BigLong(l);}
-float	BigFloat (float l) {return _BigFloat(l);}
-//short	LittleShort(short l) {return _LittleShort(l);}	// these are now macros in q_shared.h
-//int		LittleLong (int l) {return _LittleLong(l);}	//
-//float	LittleFloat (float l) {return _LittleFloat(l);}	//
-//
-#else
-//
-// standard smart-swap code...
-//
-short	BigShort(short l){return _BigShort(l);}
-short	LittleShort(short l) {return _LittleShort(l);}
-int		BigLong (int l) {return _BigLong(l);}
-int		LittleLong (int l) {return _LittleLong(l);}
-float	BigFloat (float l) {return _BigFloat(l);}
-float	LittleFloat (float l) {return _LittleFloat(l);}
-//
-#endif
 
 short   ShortSwap (short l)
 {
@@ -176,6 +153,55 @@ float FloatNoSwap (float f)
 {
 	return f;
 }
+
+#ifdef _M_IX86
+//
+// optimised stuff for Intel, since most of our data is in that format anyway...
+//
+short	BigShort(short l){return _BigShort(l);}
+int		BigLong (int l) {return _BigLong(l);}
+float	BigFloat (float l) {return _BigFloat(l);}
+//short	LittleShort(short l) {return _LittleShort(l);}	// these are now macros in q_shared.h
+//int		LittleLong (int l) {return _LittleLong(l);}	//
+//float	LittleFloat (float l) {return _LittleFloat(l);}	//
+//
+#else
+//
+// standard smart-swap code...
+//
+#ifndef _XBOX
+short	BigShort(short l){return _BigShort(l);}
+short	LittleShort(short l) {return _LittleShort(l);}
+int		BigLong (int l) {return _BigLong(l);}
+int		LittleLong (int l) {return _LittleLong(l);}
+float	BigFloat (float l) {return _BigFloat(l);}
+float	LittleFloat (float l) {return _LittleFloat(l);}
+#else
+static float _float_reverse (float f)
+{
+	union
+	{
+		float	f;
+		unsigned int	u32;
+	} _f;
+
+	_f.f = f;
+
+	_f.u32 = __loadwordbytereverse(0, &_f.u32);
+
+	return _f.f;
+}
+
+short	BigShort(short l){return l;}
+short	LittleShort(short l) {return __loadshortbytereverse(0, &l);}
+int		BigLong (int l) {return l;}
+int		LittleLong (int l) {return __loadwordbytereverse(0, &l);}
+float	BigFloat (float l) {return l;}
+float	LittleFloat (float l) {return _float_reverse(l);}
+#endif
+//
+#endif
+
 
 /*
 ================

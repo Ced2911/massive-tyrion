@@ -208,7 +208,7 @@ static inline int src_format_to_bypp(GLenum format)
 		ret = 1;
 	else if (format == 3 || format == GL_RGB || format == GL_RGB8)
 		ret = 3;
-	else if (format == 4 || format == GL_RGBA)
+	else if (format == 4 || format == GL_RGBA || format == GL_RGBA8)
 		ret = 4;
 	else 
 		xe_gl_error ("D3D_FillTextureLevel: illegal format");
@@ -224,7 +224,7 @@ static inline int dst_format_to_bypp(GLenum format)
 		ret = 1;
 	else if (format == 3 || format == GL_RGB || format == GL_RGB8)
 		ret = 4;
-	else if (format == 4 || format == GL_RGBA)
+	else if (format == 4 || format == GL_RGBA || format == GL_RGBA8)
 		ret = 4;
 	else
 		xe_gl_error ("D3D_FillTextureLevel: illegal format");
@@ -379,6 +379,7 @@ void glTexImage2D (GLenum target, GLint level, GLint internalformat, GLsizei wid
 		break;
 	case 4:
 	case GL_RGBA:
+	case GL_RGBA8:
 		dstbytes = 4;
 		//format = D3DFMT_LIN_A8R8G8B8;
 		format = D3DFMT_A8R8G8B8;

@@ -346,7 +346,7 @@ Mostly for controlling voodoo environment variables
 void CL_Setenv_f( void )
 {
 	int argc = Cmd_Argc();
-
+#ifndef _XBOX
 	if ( argc > 2 )
 	{
 		char buffer[1024];
@@ -376,6 +376,7 @@ void CL_Setenv_f( void )
 			Com_Printf( "%s undefined\n", Cmd_Argv(1), env );
 		}
 	}
+#endif
 }
 
 

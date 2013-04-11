@@ -94,9 +94,12 @@ static qboolean GLW_StartDriverAndSetMode( int mode,
 */
 void GLimp_EndFrame (void)
 {
-	//XDKGlEndFrame();
-
-	XDKGlDisplay();
+	// don't flip if drawing to front buffer
+	if ( Q_stricmp( r_drawBuffer->string, "GL_FRONT" ) != 0 )
+	{		
+		XDKGlDisplay();
+		// XDKGlEndFrame();
+	}
 }
 
 
@@ -142,16 +145,21 @@ void GLimp_Init( void )
 	glConfig.maxTextureSize = 2048;
 
 	// todo
-	//glConfig.numTextureUnits = 1;
-	// glConfig.deviceSupportsGamma = 1;
+	glConfig.maxActiveTextures = 2;
 	
 	qglLockArraysEXT = (&glLockArraysEXT);
 	qglUnlockArraysEXT = &glUnlockArraysEXT;
-	//qglMultiTexCoord2fARB = &glMultiTexCoord2f;
+	qglMultiTexCoord2fARB = &glMultiTexCoord2f;
 
 	// not working
-	//qglClientActiveTextureARB = glClientActiveTexture;
-	//qglActiveTextureARB = glActiveTexture;
+	qglClientActiveTextureARB = &glClientActiveTexture;
+	qglActiveTextureARB = &glActiveTexture;
+
+	ri.Cvar_Set( "r_picmip", "2");
+	ri.Cvar_Set( "r_colorbits", "32");
+	ri.Cvar_Set( "r_texturebits", "32");
+	ri.Cvar_Set( "r_texturebitslm", "32");
+	
 
 	glConfig.textureEnvAddAvailable = 1;
 }

@@ -4864,7 +4864,11 @@ void Item_Text_Wrapped_Paint(itemDef_t *item)
 	else 
 	{
 		textPtr = item->text;
+#ifdef _XBOX
+		if ((int)textPtr > 0xFFFF0000)
+#else
 		if ((int)textPtr < 0)	//string package ID
+#endif
 		{
 			textPtr = SP_GetStringText(-(int)textPtr);
 		}
@@ -5638,7 +5642,12 @@ void Item_Multi_Paint(itemDef_t *item)
 	}
 
 	text = Item_Multi_Setting(item);
+
+#ifdef _XBOX
+	if ((int)text > 0xFFFF0000)
+#else
 	if ((int)text < 0)	//it's a striped ID
+#endif
 	{
 		text = SP_GetStringText(-(int)text);
 	}
@@ -5996,7 +6005,11 @@ void Item_Paint(itemDef_t *item)
 			else
 			{	// Draw the desctext
 				const char *textPtr;
+#ifdef _XBOX
+				if ((int)item->descText > 0xFFFF0000)
+#else
 				if ((int)item->descText < 0)
+#endif
 				{
 					textPtr = SP_GetStringText(-(int)item->descText);
 				}
@@ -6353,7 +6366,11 @@ void Item_Text_AutoWrapped_Paint(itemDef_t *item)
 	else 
 	{
 		textPtr = item->text;
+#ifdef _XBOX
+		if ((int)textPtr > 0xFFFF0000)
+#else
 		if ((int)textPtr < 0)	//string package ID
+#endif
 		{
 			textPtr = SP_GetStringText(-(int)textPtr);
 		}

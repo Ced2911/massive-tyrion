@@ -1,4 +1,5 @@
 #include <xtl.h>
+#include <assert.h>
 #include "gl_main.h"
 #include "gl_shader_manager.h"
 
@@ -50,11 +51,12 @@ void glClientActiveTexture(GLenum texture)
 void glDrawBuffer (GLenum mode)
 {
 	// TR
+	//assert(0);
 }
  
 void glArrayElement(GLint i)
 {
-
+	assert(0);
 }
 
 void glColorPointer(GLint size, GLenum type, GLsizei stride, const GLvoid *	pointer)
@@ -111,107 +113,6 @@ void glLockArraysEXT(int first, int count) {
 void glUnlockArraysEXT(void) {
 	// nothing
 }
-
-
-#if 0 // working with vb - slow
-/**
- * mode / type
- **/ 
-void glDrawElements(GLenum mode, GLsizei numIndexes, GLenum type, const GLvoid * indices)
-{
-	union {
-		float f;
-		unsigned int u32;
-	} color;
-	
-	// Begin
-	GLImpl.prim.vertices.begin();
-	GLImpl.prim.indices.begin();
-	
-	unsigned int * indexes = (unsigned int*)indices;
-	BYTE * vertice_ptr = (BYTE *)vertexPointer.pointer;
-	BYTE * color_ptr = (BYTE *)colorPointer.pointer;
-	BYTE * texcoords0_ptr = (BYTE *)texCoordPointer[0].pointer;
-	BYTE * texcoords1_ptr = (BYTE *)texCoordPointer[1].pointer;
-
-	// vertices
-	for (int i = 0 ; i < vertexPointer.count ; i++) {
-		float * v = (float*) vertice_ptr;
-		float * t0 = (float*) texcoords0_ptr;
-		float * t1 = (float*) texcoords1_ptr;
-		unsigned char * c = (unsigned char*) color_ptr;		
-
-		color.u32 = D3DCOLOR_ARGB(c[3], c[2], c[1], c[0]);
-		//color.u32 = 0xFFFFFFFF;
-		
-		*GLImpl.prim.vertices.data++ = v[0];
-		*GLImpl.prim.vertices.data++ = v[1];
-		*GLImpl.prim.vertices.data++ = v[2];
-		*GLImpl.prim.vertices.data++ = 1;
-
-		
-		if (texcoords0_ptr) {
-			*GLImpl.prim.vertices.data++ = t0[0];
-			*GLImpl.prim.vertices.data++ = t0[1];
-		} else {
-			*GLImpl.prim.vertices.data++ = 0;
-			*GLImpl.prim.vertices.data++ = 0;
-		}
-		
-		if (texcoords1_ptr) {
-			*GLImpl.prim.vertices.data++ = t1[0];
-			*GLImpl.prim.vertices.data++ = t1[1];
-		} else {
-			*GLImpl.prim.vertices.data++ = 0;
-			*GLImpl.prim.vertices.data++ = 0;
-		}
-		
-		*GLImpl.prim.vertices.data++ = color.f;		
-		
-				
-		GLImpl.prim.vertices.next();
-
-		vertice_ptr += vertexPointer.stride;
-		if (texcoords0_ptr) {
-			texcoords0_ptr += 2 * sizeof(float);
-		}
-		if (texcoords1_ptr) {
-			texcoords1_ptr += 2 * sizeof(float);
-		}
-		color_ptr += 4 * sizeof(char);
-	}
-
-	// indices
-	for (int i = 0 ; i < numIndexes ; i++) {
-		//*GLImpl.prim.indices.data++ = indexes[i] + GLImpl.prim.indices.prev;
-		*GLImpl.prim.indices.data++ = indexes[i];
-		GLImpl.prim.indices.next();
-	}
-	
-	GLImpl.UpdateStates();
-	GLImpl.CheckDirtyMatrix(&GLImpl.projection_matrix);
-	GLImpl.CheckDirtyMatrix(&GLImpl.modelview_matrix);
-	
-	// setup shaders and textures
-	shader.ApplyShader();
-	GLImpl.ApplyTextures();
-	
-	GLImpl.device->SetIndices(GLImpl.pIbGL);
-	GLImpl.device->SetStreamSource(0, GLImpl.pVbGL, 0, sizeof(glVerticesFormat_t));
-
-	GLImpl.device->DrawIndexedPrimitive(
-		D3DPT_TRIANGLELIST, 
-		GLImpl.prim.vertices.prev,
-		0,
-		0,
-		GLImpl.prim.indices.prev, 
-		numIndexes/3
-	);
-}
-#endif
-
-#if 1
-// fast !!
 
 static float vertices_up[65536];
 
@@ -299,108 +200,6 @@ void glDrawElements(GLenum mode, GLsizei numIndexes, GLenum type, const GLvoid *
 		sizeof(glVerticesFormat_t)
 	);
 }
-#endif
-
-
-#if 0
-// not so fast !!
-
-//static float vertices_up[65536];
-
-/**
- * mode / type
- **/ 
-void glDrawElements(GLenum mode, GLsizei numIndexes, GLenum type, const GLvoid * indices)
-{
-	union {
-		float f;
-		unsigned int u32;
-	} color;
-
-	// Begin
-	GLImpl.prim.vertices.begin();
-	GLImpl.prim.indices.begin();
-	
-	// unsigned int * indexes = (unsigned int*)indices;
-	unsigned int * indexes;
-	BYTE * vertice_ptr = (BYTE *)vertexPointer.pointer;
-	BYTE * color_ptr = (BYTE *)colorPointer.pointer;
-	BYTE * texcoords0_ptr = (BYTE *)texCoordPointer[0].pointer;
-	BYTE * texcoords1_ptr = (BYTE *)texCoordPointer[1].pointer;
-	float * data;
-
-	
-
-	GLImpl.UpdateStates();
-	GLImpl.CheckDirtyMatrix(&GLImpl.projection_matrix);
-	GLImpl.CheckDirtyMatrix(&GLImpl.modelview_matrix);
-	
-	// setup shaders and textures
-	shader.ApplyShader();
-	GLImpl.ApplyTextures();
-
-	GLImpl.device->BeginIndexedVertices(
-		D3DPT_TRIANGLELIST, 0, vertexPointer.count, numIndexes, D3DFMT_INDEX32, sizeof(glVerticesFormat_t), (void**)&indexes, (void**)&data
-		);
-
-	memcpy(indexes, indices, numIndexes * 4);
-
-	// vertices
-	for (int i = 0 ; i < vertexPointer.count ; i++) {
-		float * v = (float*) vertice_ptr;
-		float * t0 = (float*) texcoords0_ptr;
-		float * t1 = (float*) texcoords1_ptr;
-		unsigned char * c = (unsigned char *) color_ptr;	
-		color.u32 = D3DCOLOR_ARGB(c[3], c[0], c[1], c[2]);
-		
-		*data++ = v[0];
-		*data++ = v[1];
-		*data++ = v[2];
-		*data++ = 1;
-		
-		if (texcoords0_ptr) {
-			*data++ = t0[0];
-			*data++ = t0[1];
-		} else {
-			*data++ = 0;
-			*data++ = 0;
-		}
-		
-		if (texcoords1_ptr) {
-			*data++ = t1[0];
-			*data++ = t1[1];
-		} else {
-			*data++ = 0;
-			*data++ = 0;
-		}
-		
-		*data++ = color.f;
-
-		vertice_ptr += vertexPointer.stride;
-		if (texcoords0_ptr) {
-			texcoords0_ptr += 2 * sizeof(float);
-		}
-		if (texcoords1_ptr) {
-			texcoords1_ptr += 2 * sizeof(float);
-		}
-		color_ptr += 4 * sizeof(char);
-	}
-
-	GLImpl.device->EndIndexedVertices();
-	/*
-	GLImpl.device->DrawIndexedPrimitiveUP(
-		D3DPT_TRIANGLELIST,
-		0,
-		vertexPointer.count,
-		numIndexes/3,
-		indexes,
-		D3DFMT_INDEX32,
-		vertices_up,
-		sizeof(glVerticesFormat_t)
-	);
-	*/
-}
-#endif
 
 void glDrawArrays (GLenum mode, GLint first, GLsizei count)
 {
