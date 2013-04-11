@@ -951,7 +951,7 @@ WinMain
 int main() {
 	char		cwd[MAX_OSPATH];
 
-	Q_strncpyz( sys_cmdline, "+set map kejim_base", sizeof( sys_cmdline ) );
+	//Q_strncpyz( sys_cmdline, "+set map kejim_base", sizeof( sys_cmdline ) );
 
 	// done before Com/Sys_Init since we need this for error output
 	Sys_CreateConsole();

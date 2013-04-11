@@ -2791,9 +2791,9 @@ qboolean R_LoadMDXM( model_t *mod, void *buffer, const char *mod_name, qboolean 
 
 		// Swap mdxmLODSurfOffset_t
 		mdxmLODSurfOffset_t * mdxmLODSurfOffsets = (mdxmLODSurfOffset_t *) ( (byte *)lod + sizeof (mdxmLOD_t) );
-		for ( l = 0 ; l < mdxm->numSurfaces ; l++)
+		for ( int k = 0 ; k < mdxm->numSurfaces ; k++)
 		{
-			LL(mdxmLODSurfOffsets->offsets[l]);
+			LL(mdxmLODSurfOffsets->offsets[k]);
 		}
 
 		for ( i = 0 ; i < mdxm->numSurfaces ; i++) 

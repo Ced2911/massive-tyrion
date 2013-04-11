@@ -1080,6 +1080,8 @@ void *G2_FindSurface(const model_s *mod, int index, int lod)
 	assert(mod);
 	assert(mod->mdxm);
 
+	mdxmLOD_t * lodData;
+
 	// point at first lod list
 	byte	*current = (byte*)((int)mod->mdxm + (int)mod->mdxm->ofsLODs);
 	int i;
@@ -1088,7 +1090,7 @@ void *G2_FindSurface(const model_s *mod, int index, int lod)
 	assert(lod>=0&&lod<mod->mdxm->numLODs);
 	for (i=0; i<lod; i++)
 	{
-		mdxmLOD_t *lodData = (mdxmLOD_t *)current;
+		lodData = (mdxmLOD_t *)current;
 		current += lodData->ofsEnd;
 	}
 
