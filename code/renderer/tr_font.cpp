@@ -6,6 +6,10 @@
 #include "tr_local.h"
 #include "tr_font.h"
 
+#define	LL(x)	x=LittleLong(x)
+#define LF(x)	x=LittleFloat(x)
+#define LS(x)	x=LittleShort(x)
+
 inline int Round(float value)
 {
 	return((int)floorf(value + 0.5f));
@@ -358,6 +362,28 @@ CFontInfo::CFontInfo(const char *fontName)
 		ri.FS_ReadFile(fontName, &buff);
 		fontdat = (dfontdat_t *)buff;
 
+#ifndef _M_IX86
+		// need swap !
+		for(i = 0; i < GLYPH_COUNT; i++)
+		{
+			mGlyphs[i] = fontdat->mGlyphs[i];
+			LS(mGlyphs[i].width);
+			LS(mGlyphs[i].height);
+			LS(mGlyphs[i].horizAdvance);
+			LS(mGlyphs[i].horizOffset);
+			LL(mGlyphs[i].baseline);
+			LF(mGlyphs[i].s);
+			LF(mGlyphs[i].t);
+			LF(mGlyphs[i].s2);
+			LF(mGlyphs[i].t2);
+		}
+		mPointSize = LittleShort(fontdat->mPointSize);
+		mHeight = LittleShort(fontdat->mHeight);
+		mAscender = LittleShort(fontdat->mAscender);
+		mDescender = LittleShort(fontdat->mDescender);
+		mAsianHack = LittleShort(fontdat->mKoreanHack);
+		mbRoundCalcs = !!strstr(fontName,"ergo");
+#else
 		for(i = 0; i < GLYPH_COUNT; i++)
 		{
 			mGlyphs[i] = fontdat->mGlyphs[i];
@@ -368,6 +394,7 @@ CFontInfo::CFontInfo(const char *fontName)
 		mDescender = fontdat->mDescender;
 		mAsianHack = fontdat->mKoreanHack;
 		mbRoundCalcs = !!strstr(fontName,"ergo");
+#endif
 
 		ri.FS_FreeFile(buff);
 	}

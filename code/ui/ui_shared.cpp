@@ -4933,6 +4933,7 @@ void Item_Text_Paint(itemDef_t *item)
 	}
 	else 
 	{
+		textPtr = item->text;
 #ifdef _XBOX
 		// Xbox 360 have ptr mapped after 0x7FFF.FFFF
 		if ((int)textPtr > 0xFFFF0000)
