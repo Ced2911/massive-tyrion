@@ -573,7 +573,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
+      <Optimization>Full</Optimization>
       <ExceptionHandling>false</ExceptionHandling>
       <MinimalRebuild>true</MinimalRebuild>
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -583,7 +583,7 @@
       <CallAttributedProfiling>Callcap</CallAttributedProfiling>
       <AdditionalIncludeDirectories>..\xenon;..\..\code\renderer;..\..\code\ff\ifc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <StructMemberAlignment>8Bytes</StructMemberAlignment>
+      <StructMemberAlignment>2Bytes</StructMemberAlignment>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -594,6 +594,11 @@
     <Deploy>
       <DeploymentType>CopyToHardDrive</DeploymentType>
     </Deploy>
+    <ImageXex>
+      <BaseAddress>
+      </BaseAddress>
+      <AdditionalOptions>/BASE:0x82000000 %(AdditionalOptions)</AdditionalOptions>
+    </ImageXex>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'">
     <ClCompile>
@@ -611,6 +616,7 @@
       <CallAttributedProfiling>Callcap</CallAttributedProfiling>
       <AdditionalIncludeDirectories>..\xenon;..\..\code\renderer;..\..\code\ff\ifc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <StructMemberAlignment>8Bytes</StructMemberAlignment>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -639,6 +645,7 @@
       <CallAttributedProfiling>Callcap</CallAttributedProfiling>
       <AdditionalIncludeDirectories>..\xenon;..\..\code\renderer;..\..\code\ff\ifc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <StructMemberAlignment>8Bytes</StructMemberAlignment>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -671,6 +678,7 @@
       <PreprocessorDefinitions>NDEBUG;_XBOX;PROFILE;FASTCAP</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\xenon;..\..\code\renderer;..\..\code\ff\ifc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <StructMemberAlignment>8Bytes</StructMemberAlignment>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -701,6 +709,7 @@
       <PreprocessorDefinitions>NDEBUG;_XBOX;__POWERPC__;_JK2EXE;NO_GETENV;_IMMERSION</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\xenon;..\..\code\renderer;..\..\code\ff\ifc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <StructMemberAlignment>8Bytes</StructMemberAlignment>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -731,6 +740,7 @@
       <PreprocessorDefinitions>NDEBUG;_XBOX;LTCG;__POWERPC__;_JK2EXE;NO_GETENV;_IMMERSION</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\xenon;..\..\code\renderer;..\..\code\ff\ifc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <StructMemberAlignment>8Bytes</StructMemberAlignment>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

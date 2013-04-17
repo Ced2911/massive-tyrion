@@ -9,6 +9,8 @@
 
 #include "assert.h"
 
+#define LL(x)	x = __loadwordbytereverse(0, &x);
+
 // Sequencer 
 
 CSequencer::CSequencer( void )

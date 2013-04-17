@@ -981,7 +981,7 @@ int main() {
 	}
 
 	// Force map execution !!!
-	//Cbuf_ExecuteText(EXEC_APPEND,"devmap kejim_post");
+	Cbuf_ExecuteText(EXEC_APPEND,"devmap kejim_post");
 
     // main game loop
 	while( 1 ) {

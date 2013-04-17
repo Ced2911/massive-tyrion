@@ -783,15 +783,4 @@ void	SCR_SetScreenshot(const byte *pbData, int w, int h);
 byte*	SCR_TempRawImage_ReadFromFile(const char *psLocalFilename, int *piWidth, int *piHeight, byte *pbReSampleBuffer, qboolean qbVertFlip);
 void	SCR_TempRawImage_CleanUp();
 
-
-#ifdef _XBOX // Crappy
-static inline int abs( int n ) {
-	return n < 0 ? -n : n;
-}
-
-static inline double fabs( double x ) {
-	return x < 0 ? -x : x;
-}
-#endif
-
 #endif //__QCOMMON_H__

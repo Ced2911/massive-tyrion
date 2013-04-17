@@ -93,6 +93,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugOpt|Xbox 360'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\code\game\bg_misc.cpp" />
     <ClCompile Include="..\..\code\game\bg_pangles.cpp" />
@@ -400,7 +401,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
+      <Optimization>Full</Optimization>
       <ExceptionHandling>false</ExceptionHandling>
       <MinimalRebuild>true</MinimalRebuild>
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -410,7 +411,8 @@
       <CallAttributedProfiling>Callcap</CallAttributedProfiling>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>..\ICARUS;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <StructMemberAlignment>8Bytes</StructMemberAlignment>
+      <StructMemberAlignment>2Bytes</StructMemberAlignment>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -430,6 +432,8 @@
     <ImageXex />
     <ImageXex>
       <ExportByName>true</ExportByName>
+      <BaseAddress>
+      </BaseAddress>
     </ImageXex>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'">
@@ -458,6 +462,9 @@
     <ImageXex>
       <ExportByName>true</ExportByName>
     </ImageXex>
+    <Deploy>
+      <DeploymentType>CopyToHardDrive</DeploymentType>
+    </Deploy>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Xbox 360'">
     <ClCompile>
@@ -489,6 +496,9 @@
     <ImageXex>
       <ExportByName>true</ExportByName>
     </ImageXex>
+    <Deploy>
+      <DeploymentType>CopyToHardDrive</DeploymentType>
+    </Deploy>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile_FastCap|Xbox 360'">
     <ClCompile>
@@ -519,6 +529,9 @@
     <ImageXex>
       <ExportByName>true</ExportByName>
     </ImageXex>
+    <Deploy>
+      <DeploymentType>CopyToHardDrive</DeploymentType>
+    </Deploy>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">
     <ClCompile>
@@ -548,6 +561,9 @@
     <ImageXex>
       <ExportByName>true</ExportByName>
     </ImageXex>
+    <Deploy>
+      <DeploymentType>CopyToHardDrive</DeploymentType>
+    </Deploy>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">
     <ClCompile>
@@ -577,6 +593,9 @@
     <ImageXex>
       <ExportByName>true</ExportByName>
     </ImageXex>
+    <Deploy>
+      <DeploymentType>CopyToHardDrive</DeploymentType>
+    </Deploy>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
